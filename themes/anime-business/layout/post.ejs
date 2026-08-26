@@ -1,0 +1,54 @@
+<article class="post">
+  <% if (page.banner) { %>
+    <div class="post-banner" style="background-image:url('<%- url_for(page.banner) %>')"></div>
+  <% } %>
+  <nav class="breadcrumb">
+    <a href="<%- url_for('/') %>"><svg class="icon"><use xlink:href="<%- url_for('images/icons.svg') %>#icon-home"></use></svg>首页</a>
+    <span class="crumb-sep">/</span>
+    <span><%- page.title %></span>
+  </nav>
+  <header class="post-header">
+    <h1 class="post-title"><%- page.title %></h1>
+    <div class="post-meta">
+      <span class="meta-item"><svg class="icon"><use xlink:href="<%- url_for('images/icons.svg') %>#icon-archive"></use></svg><time datetime="<%- date(page.date, 'YYYY-MM-DD') %>"><%- date(page.date, 'YYYY-MM-DD') %></time></span>
+      <% if (page.updated && date(page.updated, 'YYYY-MM-DD') !== date(page.date, 'YYYY-MM-DD')) { %>
+        <span class="meta-sep">·</span><span class="meta-item">更新于 <%- date(page.updated, 'YYYY-MM-DD') %></span>
+      <% } %>
+      <% var plainText = strip_html(page.content).replace(/\s+/g, ''); var minutes = Math.max(1, Math.round(plainText.length / 350)); %>
+      <span class="meta-sep">·</span><span class="meta-item"><svg class="icon"><use xlink:href="<%- url_for('images/icons.svg') %>#icon-file"></use></svg><%= plainText.length %> 字</span>
+      <span class="meta-sep">·</span><span class="meta-item"><svg class="icon"><use xlink:href="<%- url_for('images/icons.svg') %>#icon-clock"></use></svg>约 <%= minutes %> 分钟</span>
+      <% if (page.categories && page.categories.length) { %>
+        <span class="meta-sep">·</span>
+        <span class="post-cats"><% page.categories.each(function (cat) { %><a href="<%- url_for(cat.path) %>"><%= cat.name %></a><% }); %></span>
+      <% } %>
+    </div>
+  </header>
+
+  <div class="post-content">
+    <%- page.content %>
+  </div>
+
+  <% if (page.tags && page.tags.length) { %>
+    <footer class="post-tags">
+      <span class="post-tags-label"><svg class="icon"><use xlink:href="<%- url_for('images/icons.svg') %>#icon-tag"></use></svg>标签</span>
+      <% page.tags.each(function (tag) { %>
+        <a class="tag-pill" href="<%- url_for(tag.path) %>"># <%= tag.name %></a>
+      <% }); %>
+    </footer>
+  <% } %>
+
+  <nav class="post-nav">
+    <% if (page.prev) { %>
+      <a class="post-nav-item prev" href="<%- url_for(page.prev.path) %>">
+        <span class="nav-label"><svg class="icon"><use xlink:href="<%- url_for('images/icons.svg') %>#icon-arrow-left"></use></svg> 上一篇</span>
+        <span class="nav-title"><%- page.prev.title %></span>
+      </a>
+    <% } %>
+    <% if (page.next) { %>
+      <a class="post-nav-item next" href="<%- url_for(page.next.path) %>">
+        <span class="nav-label">下一篇 <svg class="icon"><use xlink:href="<%- url_for('images/icons.svg') %>#icon-arrow-right"></use></svg></span>
+        <span class="nav-title"><%- page.next.title %></span>
+      </a>
+    <% } %>
+  </nav>
+</article>

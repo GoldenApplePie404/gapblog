@@ -1,0 +1,342 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>金苹果派の博客 · 二次元×商务 重构预览</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@400;500;700&family=Noto+Serif+SC:wght@500;700&display=swap" rel="stylesheet">
+<link href="https://cdn.jsdelivr.net/npm/lxgw-wenkai-webfont@1.7.0/style.css" rel="stylesheet">
+<style>
+  :root{
+    /* 主体色相：#FF9700 同相延伸 */
+    --paper:#FBF8F3;        /* 暖白纸面 */
+    --paper-2:#F4EEE4;      /* 次级面 */
+    --ink:#241F19;          /* 近黑暖墨 主文字 */
+    --ink-2:#5A5249;        /* 次级文字 */
+    --gray:#8A8073;         /* 弱化文字 */
+    --line:rgba(36,31,25,.10);   /* 发丝线 */
+    --line-2:rgba(36,31,25,.06);
+    --primary:#FF9700;      /* 主体橙 */
+    --primary-deep:#C25E00; /* 深延·可读文字 */
+    --primary-soft:#FFF1E0; /* 浅延·托底 */
+    --primary-ring:rgba(255,151,0,.35);
+    --cool:#2E6F73;         /* 商务辅助冷色·极少量 */
+
+    --r-sm:8px; --r-md:12px; --r-lg:18px;
+    --font-title:'LXGW WenKai','Noto Serif SC',cursive;
+    --font-body:'Noto Sans SC',system-ui,-apple-system,sans-serif;
+    --maxw:1120px;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  body{
+    background:var(--paper);
+    color:var(--ink);
+    font-family:var(--font-body);
+    line-height:1.75;
+    -webkit-font-smoothing:antialiased;
+  }
+  a{color:var(--primary-deep);text-decoration:none;transition:color .2s}
+  a:hover{color:var(--primary)}
+
+  /* ===== 顶部说明条 ===== */
+  .banner{
+    background:var(--ink);color:#F4EEE4;
+    font-size:12px;letter-spacing:.04em;
+    padding:8px 16px;text-align:center;
+  }
+  .banner b{color:var(--primary)}
+
+  /* ===== 配色板 ===== */
+  .palette{
+    max-width:var(--maxw);margin:32px auto 8px;padding:0 24px;
+  }
+  .palette h4{font-family:var(--font-title);font-size:15px;color:var(--ink-2);margin-bottom:12px;font-weight:400}
+  .swatches{display:flex;gap:10px;flex-wrap:wrap}
+  .sw{width:108px;border:1px solid var(--line);border-radius:var(--r-sm);overflow:hidden;background:#fff}
+  .sw .c{height:54px}
+  .sw .m{padding:7px 9px;font-size:11px}
+  .sw .m b{display:block;font-family:var(--font-body);font-weight:700;font-size:12px}
+  .sw .m span{color:var(--gray)}
+
+  /* ===== 导航 ===== */
+  .nav{
+    position:sticky;top:0;z-index:50;
+    background:rgba(251,248,243,.85);
+    backdrop-filter:saturate(150%) blur(8px);
+    border-bottom:1px solid var(--line);
+  }
+  .nav-in{max-width:var(--maxw);margin:0 auto;padding:0 24px;height:62px;display:flex;align-items:center;gap:26px}
+  .logo{font-family:var(--font-title);font-size:21px;font-weight:700;color:var(--ink);display:flex;align-items:center;gap:9px}
+  .logo .dot{width:11px;height:11px;border-radius:50%;background:var(--primary);box-shadow:0 0 0 4px var(--primary-ring)}
+  .nav-links{display:flex;gap:4px;margin-left:8px}
+  .nav-links a{
+    position:relative;color:var(--ink-2);font-size:14.5px;font-weight:500;
+    padding:8px 14px;border-radius:var(--r-sm);transition:.18s;
+  }
+  .nav-links a:hover{background:var(--primary-soft);color:var(--primary-deep)}
+  .nav-links a.active{color:var(--primary-deep);font-weight:700}
+  .nav-links a.active::before{
+    content:"";position:absolute;left:6px;top:50%;transform:translateY(-50%);
+    width:3px;height:16px;border-radius:2px;background:var(--primary);
+  }
+  .nav-right{margin-left:auto;display:flex;align-items:center;gap:14px}
+  .nav-search{
+    display:flex;align-items:center;gap:7px;background:#fff;border:1px solid var(--line);
+    border-radius:var(--r-sm);padding:7px 12px;font-size:13px;color:var(--gray);min-width:170px;
+  }
+  .btn{
+    font-family:var(--font-body);font-weight:700;font-size:14px;cursor:pointer;border:none;
+    background:var(--primary);color:var(--ink);padding:9px 18px;border-radius:var(--r-sm);
+    transition:.18s;
+  }
+  .btn:hover{background:var(--primary-deep);color:#fff;transform:translateY(-1px)}
+
+  /* ===== Hero ===== */
+  .hero{max-width:var(--maxw);margin:0 auto;padding:56px 24px 24px;display:grid;grid-template-columns:1.4fr .9fr;gap:40px;align-items:center}
+  .hero .kicker{display:inline-flex;align-items:center;gap:8px;font-size:13px;font-weight:700;color:var(--primary-deep);letter-spacing:.06em;margin-bottom:14px}
+  .hero .kicker::before{content:"";width:22px;height:3px;border-radius:2px;background:var(--primary)}
+  .hero h1{font-family:var(--font-title);font-size:42px;line-height:1.28;font-weight:700;margin-bottom:18px}
+  .hero h1 em{font-style:normal;color:var(--primary-deep)}
+  .hero p{color:var(--ink-2);font-size:15.5px;max-width:46ch;margin-bottom:26px}
+  .hero .acts{display:flex;gap:12px;align-items:center}
+  .btn-ghost{background:transparent;color:var(--primary-deep);border:1px solid var(--primary-ring);padding:9px 18px;border-radius:var(--r-sm);font-weight:700;font-size:14px;cursor:pointer;transition:.18s}
+  .btn-ghost:hover{background:var(--primary-soft)}
+  .hero-card{
+    background:linear-gradient(180deg,#fff,var(--paper-2));
+    border:1px solid var(--line);border-radius:var(--r-lg);padding:22px;
+  }
+  .hero-card .ava{width:64px;height:64px;border-radius:50%;background:var(--primary-soft);border:2px solid var(--primary);display:flex;align-items:center;justify-content:center;font-family:var(--font-title);font-size:26px;color:var(--primary-deep);margin-bottom:14px}
+  .hero-card h3{font-family:var(--font-title);font-size:19px;margin-bottom:6px}
+  .hero-card p{font-size:13.5px;color:var(--gray);margin-bottom:16px}
+  .stats{display:flex;gap:22px;border-top:1px solid var(--line);padding-top:14px}
+  .stats div b{display:block;font-family:var(--font-title);font-size:22px;color:var(--primary-deep)}
+  .stats div span{font-size:12px;color:var(--gray)}
+
+  /* ===== 区块标题 ===== */
+  .sec{max-width:var(--maxw);margin:46px auto 0;padding:0 24px}
+  .sec-head{display:flex;align-items:baseline;gap:12px;margin-bottom:22px}
+  .sec-head h2{font-family:var(--font-title);font-size:25px;font-weight:700;position:relative;padding-left:14px}
+  .sec-head h2::before{content:"";position:absolute;left:0;top:6px;width:4px;height:22px;border-radius:2px;background:var(--primary)}
+  .sec-head .sub{font-size:13px;color:var(--gray)}
+  .sec-head .more{margin-left:auto;font-size:13px;font-weight:700}
+
+  /* ===== 文章网格 ===== */
+  .grid{display:grid;grid-template-columns:repeat(3,1fr);gap:22px}
+  .post{
+    background:#fff;border:1px solid var(--line);border-radius:var(--r-md);
+    overflow:hidden;transition:.2s;display:flex;flex-direction:column;
+  }
+  .post:hover{transform:translateY(-3px);box-shadow:0 12px 30px -16px rgba(36,31,25,.35);border-color:var(--primary-ring)}
+  .post .cover{height:128px;background:var(--primary-soft);position:relative;display:flex;align-items:center;justify-content:center}
+  .post .cover::after{content:"";position:absolute;left:14px;top:14px;width:9px;height:9px;border-radius:50%;background:var(--primary)}
+  .post .cover .emo{font-family:var(--font-title);font-size:34px;color:var(--primary-deep)}
+  .post .body{padding:16px 17px 18px;display:flex;flex-direction:column;gap:9px;flex:1}
+  .post .tag{align-self:flex-start;font-size:11.5px;font-weight:700;color:var(--primary-deep);background:var(--primary-soft);padding:3px 10px;border-radius:999px}
+  .post h3{font-family:var(--font-title);font-size:17.5px;line-height:1.4;font-weight:700}
+  .post p{font-size:13px;color:var(--gray);flex:1}
+  .post .meta{font-size:12px;color:var(--gray);display:flex;gap:12px;border-top:1px solid var(--line-2);padding-top:11px}
+
+  /* ===== 双栏：列表 + 侧栏 ===== */
+  .two{display:grid;grid-template-columns:1fr 300px;gap:34px;align-items:start}
+  .side .wd{background:#fff;border:1px solid var(--line);border-radius:var(--r-md);padding:18px;margin-bottom:20px}
+  .side .wd h4{font-family:var(--font-title);font-size:16px;font-weight:700;margin-bottom:13px;padding-left:11px;position:relative}
+  .side .wd h4::before{content:"";position:absolute;left:0;top:4px;width:3px;height:16px;border-radius:2px;background:var(--primary)}
+  .cat{display:flex;flex-direction:column;gap:2px}
+  .cat a{display:flex;justify-content:space-between;font-size:13.5px;color:var(--ink-2);padding:7px 9px;border-radius:var(--r-sm);transition:.15s}
+  .cat a:hover{background:var(--primary-soft);color:var(--primary-deep)}
+  .cat a span{color:var(--gray);font-size:12px}
+  .recent{display:flex;flex-direction:column;gap:11px}
+  .recent a{display:flex;gap:11px;align-items:center;font-size:13.5px;color:var(--ink-2)}
+  .recent .th{width:42px;height:42px;border-radius:var(--r-sm);background:var(--primary-soft);flex:0 0 auto;display:flex;align-items:center;justify-content:center;font-family:var(--font-title);color:var(--primary-deep);font-size:18px}
+
+  /* ===== 页脚 ===== */
+  .foot{margin-top:64px;border-top:1px solid var(--line);background:var(--paper-2)}
+  .foot-in{max-width:var(--maxw);margin:0 auto;padding:34px 24px;display:flex;justify-content:space-between;gap:30px;flex-wrap:wrap}
+  .foot .col h5{font-family:var(--font-title);font-size:15px;margin-bottom:11px}
+  .foot .col a{display:block;font-size:13px;color:var(--ink-2);padding:4px 0}
+  .foot .col a:hover{color:var(--primary)}
+  .foot .brand{font-family:var(--font-title);font-size:18px;display:flex;align-items:center;gap:9px;margin-bottom:10px}
+  .foot .brand .dot{width:10px;height:10px;border-radius:50%;background:var(--primary)}
+  .foot .copy{width:100%;border-top:1px solid var(--line);margin-top:8px;padding-top:16px;font-size:12px;color:var(--gray);text-align:center}
+
+  @media(max-width:880px){
+    .hero{grid-template-columns:1fr;gap:26px}
+    .grid{grid-template-columns:1fr 1fr}
+    .two{grid-template-columns:1fr}
+    .nav-links{display:none}
+  }
+</style>
+</head>
+<body>
+
+<div class="banner">预览方案 · <b>二次元个性 × 商务专业</b> · 主体色 #FF9700 · 本次仅预览，未改动主题源码</div>
+
+<!-- 配色板 -->
+<div class="palette">
+  <h4>配色系统（#FF9700 同相延伸 + 中性商务基底）</h4>
+  <div class="swatches">
+    <div class="sw"><div class="c" style="background:#FF9700"></div><div class="m"><b>#FF9700</b><span>主体橙·标记/填充</span></div></div>
+    <div class="sw"><div class="c" style="background:#C25E00"></div><div class="m"><b>#C25E00</b><span>深延·可读文字</span></div></div>
+    <div class="sw"><div class="c" style="background:#FFF1E0"></div><div class="m"><b>#FFF1E0</b><span>浅延·托底/hover</span></div></div>
+    <div class="sw"><div class="c" style="background:#FBF8F3"></div><div class="m"><b>#FBF8F3</b><span>纸面·全局底</span></div></div>
+    <div class="sw"><div class="c" style="background:#241F19"></div><div class="m"><b>#241F19</b><span>暖墨·主文字</span></div></div>
+    <div class="sw"><div class="c" style="background:#2E6F73"></div><div class="m"><b>#2E6F73</b><span>商务冷·极少用</span></div></div>
+  </div>
+</div>
+
+<!-- 导航 -->
+<nav class="nav">
+  <div class="nav-in">
+    <div class="logo"><span class="dot"></span>金苹果派の博客</div>
+    <div class="nav-links">
+      <a class="active" href="#">首页</a>
+      <a href="#">归档</a>
+      <a href="#">分类</a>
+      <a href="#">关于</a>
+      <a href="#">友链</a>
+    </div>
+    <div class="nav-right">
+      <div class="nav-search">🔍 搜索文章…</div>
+      <button class="btn">订阅</button>
+    </div>
+  </div>
+</nav>
+
+<!-- Hero -->
+<section class="hero">
+  <div>
+    <div class="kicker">独立开发者 · 二次元同好</div>
+    <h1>这里是 <em>金苹果派</em> 的<br>代码与故事收藏册</h1>
+    <p>记录 Godot 视觉小说、NeoForge 模组、MC 服务器运营，以及一点点二次元创作。安静地写，认真地利落。</p>
+    <div class="acts">
+      <button class="btn">开始阅读</button>
+      <button class="btn-ghost">关于我 →</button>
+    </div>
+  </div>
+  <div class="hero-card">
+    <div class="ava">🍎</div>
+    <h3>GoldenApplePie</h3>
+    <p>全栈独立开发者，穿梭于游戏引擎与社区运营之间。</p>
+    <div class="stats">
+      <div><b>42</b><span>文章</span></div>
+      <div><b>6</b><span>分类</span></div>
+      <div><b>1.2k</b><span>访客</span></div>
+    </div>
+  </div>
+</section>
+
+<!-- 最新文章 -->
+<section class="sec">
+  <div class="sec-head">
+    <h2>最新文章</h2>
+    <span class="sub">近期更新</span>
+    <a class="more" href="#">查看全部 →</a>
+  </div>
+  <div class="grid">
+    <article class="post">
+      <div class="cover"><span class="emo">🎮</span></div>
+      <div class="body">
+        <span class="tag">Godot</span>
+        <h3>《星辰下的约定》对话框系统复盘</h3>
+        <p>从信号连接到打字机效果，拆解一套可复用的 VN 对话框架构。</p>
+        <div class="meta"><span>📅 08-20</span><span>💬 8 评</span></div>
+      </div>
+    </article>
+    <article class="post">
+      <div class="cover"><span class="emo">⚙️</span></div>
+      <div class="body">
+        <span class="tag">NeoForge</span>
+        <h3>Blockbench 建模接入 MCP 工作流</h3>
+        <p>用模型上下文协议把 3D 资源生成塞进开发流水线。</p>
+        <div class="meta"><span>📅 08-15</span><span>💬 12 评</span></div>
+      </div>
+    </article>
+    <article class="post">
+      <div class="cover"><span class="emo">🐴</span></div>
+      <div class="body">
+        <span class="tag">MC 运营</span>
+        <h3>万驹同源官网视觉统一化实践</h3>
+        <p>蔚蓝×柠檬黄体系下，如何收束多页面的视觉噪音。</p>
+        <div class="meta"><span>📅 08-09</span><span>💬 5 评</span></div>
+      </div>
+    </article>
+  </div>
+</section>
+
+<!-- 双栏 -->
+<section class="sec two" style="margin-top:46px">
+  <div>
+    <div class="sec-head">
+      <h2>随笔</h2>
+      <span class="sub">思考与碎碎念</span>
+    </div>
+    <div class="grid" style="grid-template-columns:1fr 1fr">
+      <article class="post">
+        <div class="cover"><span class="emo">☕</span></div>
+        <div class="body">
+          <span class="tag">日常</span>
+          <h3>为什么我坚持手写体标题</h3>
+          <p>在效率与个性之间，给博客留一处温度。</p>
+          <div class="meta"><span>📅 08-02</span></div>
+        </div>
+      </article>
+      <article class="post">
+        <div class="cover"><span class="emo">🔧</span></div>
+        <div class="body">
+          <span class="tag">技术</span>
+          <h3>ESP32 + NFC 智能卡踩坑记</h3>
+          <p>从选型到打板，一份乙方视角的硬件交付笔记。</p>
+          <div class="meta"><span>📅 07-28</span></div>
+        </div>
+      </article>
+    </div>
+  </div>
+  <aside class="side">
+    <div class="wd">
+      <h4>分类</h4>
+      <div class="cat">
+        <a href="#">Godot 开发 <span>14</span></a>
+        <a href="#">NeoForge 模组 <span>9</span></a>
+        <a href="#">MC 运营 <span>11</span></a>
+        <a href="#">硬件折腾 <span>5</span></a>
+        <a href="#">随笔 <span>3</span></a>
+      </div>
+    </div>
+    <div class="wd">
+      <h4>最近回复</h4>
+      <div class="recent">
+        <a href="#"><span class="th">🎮</span>对话框信号连接的问题</a>
+        <a href="#"><span class="th">⚙️</span>MCP 资源生成报错</a>
+        <a href="#"><span class="th">🐴</span>官网配色对齐建议</a>
+      </div>
+    </div>
+  </aside>
+</section>
+
+<!-- 页脚 -->
+<footer class="foot">
+  <div class="foot-in">
+    <div class="col" style="max-width:280px">
+      <div class="brand"><span class="dot"></span>金苹果派の博客</div>
+      <p style="font-size:13px;color:var(--gray)">代码、游戏与二次元的交汇处。用心写，慢慢更。</p>
+    </div>
+    <div class="col">
+      <h5>导航</h5>
+      <a href="#">首页</a><a href="#">归档</a><a href="#">分类</a><a href="#">关于</a>
+    </div>
+    <div class="col">
+      <h5>友邻</h5>
+      <a href="#">万驹同源</a><a href="#">Galgame 框架</a><a href="#">GitHub</a>
+    </div>
+    <div class="col">
+      <h5>联系</h5>
+      <a href="#">邮箱</a><a href="#">QQ</a><a href="#">RSS</a>
+    </div>
+    <div class="copy">© 2026 GoldenApplePie · 由 Hexo 驱动 · 二次元 × 商务 重构预览</div>
+  </div>
+</footer>
+
+</body>
+</html>

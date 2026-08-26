@@ -1,0 +1,61 @@
+<footer class="site-footer">
+  <div class="container">
+    <div class="footer-grid">
+      <div class="footer-col footer-brand">
+        <div class="footer-logo"><%- config.title %></div>
+        <ul class="footer-contact">
+          <% Object.entries((theme.footer && theme.footer.contact) || {}).forEach(function (item) { %>
+            <li>
+              <span class="contact-label"><%= item[0] %></span>
+              <% var value = String(item[1]); %>
+              <% if (value.indexOf('@') >= 0) { %>
+                <a href="mailto:<%- value %>"><%= value %></a>
+              <% } else { %>
+                <span><%= value %></span>
+              <% } %>
+            </li>
+          <% }); %>
+        </ul>
+        <div class="footer-social">
+          <% var socialIcons = { github: 'icon-github', bilibili: 'icon-bilibili', x: 'icon-x', 爱发电: 'icon-afdian' }; %>
+          <% Object.entries(theme.social || {}).forEach(function (item) { %>
+            <% var key = item[0].toLowerCase(); %>
+            <% if (key === 'email') return; %>
+            <% var icon = socialIcons[key] || 'icon-link'; %>
+            <a class="social-link" href="<%- item[1] %>" target="_blank" rel="noopener">
+              <svg class="icon"><use xlink:href="<%- url_for('images/icons.svg') %>#<%= icon %>"></use></svg>
+              <%= item[0] %>
+            </a>
+          <% }); %>
+        </div>
+      </div>
+      <div class="footer-col">
+        <h4 class="footer-head">快速导航</h4>
+        <% var menuIcons = { '/': 'icon-home', '/archives/': 'icon-archive', '/categories/': 'icon-folder', '/tags/': 'icon-tag', '/about/': 'icon-user' }; %>
+        <ul class="footer-links footer-links-grid">
+          <% Object.entries(theme.menu || {}).forEach(function (item) { %>
+            <% var icon = menuIcons[item[1]] || 'icon-dot'; %>
+            <li><a href="<%- url_for(item[1]) %>"><svg class="icon"><use xlink:href="<%- url_for('images/icons.svg') %>#<%= icon %>"></use></svg><%= item[0] %></a></li>
+          <% }); %>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h4 class="footer-head">友情链接</h4>
+        <ul class="footer-links">
+          <% Object.entries(theme.friends || {}).forEach(function (item) { %>
+            <li>
+              <a href="<%- item[1] %>" target="_blank" rel="noopener">
+                <svg class="icon"><use xlink:href="<%- url_for('images/icons.svg') %>#icon-link"></use></svg>
+                <%= item[0] %>
+              </a>
+            </li>
+          <% }); %>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <p>© <%- date(Date.now(), 'YYYY') %> <%- config.author || config.title %></p>
+      <% if (theme.footer && theme.footer.icp) { %><p class="footer-icp"><%= theme.footer.icp %></p><% } %>
+    </div>
+  </div>
+</footer>

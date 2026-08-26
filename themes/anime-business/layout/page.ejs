@@ -1,0 +1,13 @@
+<article class="post page">
+  <nav class="breadcrumb">
+    <a href="<%- url_for('/') %>"><svg class="icon"><use xlink:href="<%- url_for('images/icons.svg') %>#icon-home"></use></svg>首页</a>
+    <span class="crumb-sep">/</span>
+    <span><%- page.title %></span>
+  </nav>
+  <header class="post-header">
+    <h1 class="post-title"><%- page.title %></h1>
+  </header>
+  <div class="post-content">
+    <%- page.content %>
+  </div>
+</article>

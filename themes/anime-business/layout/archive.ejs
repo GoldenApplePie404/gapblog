@@ -1,0 +1,17 @@
+<h1 class="page-title"><%- page.title || '归档' %></h1>
+<% var lastYear = null; %>
+<div class="archive-list">
+  <% page.posts.each(function (post) {
+       var y = post.date.year();
+       if (y !== lastYear) { lastYear = y; %>
+       <h2 class="archive-year"><svg class="icon"><use xlink:href="<%- url_for('images/icons.svg') %>#icon-archive"></use></svg> <%= y %></h2>
+  <%   } %>
+    <div class="archive-item">
+      <time class="archive-date" datetime="<%- date(post.date, 'YYYY-MM-DD') %>"><%- date(post.date, 'MM-DD') %></time>
+      <a class="archive-link" href="<%- url_for(post.path) %>"><%- post.title %></a>
+    </div>
+  <% }); %>
+</div>
+<div class="deco-divider"><span></span></div>
+
+<%- partial('_partial/pagination') %>

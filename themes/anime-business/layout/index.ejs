@@ -1,0 +1,35 @@
+<section class="section-head">
+  <h2 class="section-title">
+    <svg class="icon"><use xlink:href="<%- url_for('images/icons.svg') %>#icon-pen"></use></svg>
+    最新文章
+  </h2>
+  <a class="section-more" href="<%- url_for('/archives/') %>">全部归档
+    <svg class="icon"><use xlink:href="<%- url_for('images/icons.svg') %>#icon-arrow-right"></use></svg>
+  </a>
+</section>
+
+<% var posts = page.posts.toArray(); %>
+<section class="post-list<%= posts.length < 2 ? ' single' : '' %>" id="postList">
+  <% if (posts.length < 2) { %>
+    <div class="masonry-col">
+      <% posts.forEach(function (post) { %>
+        <%- partial('_partial/post-card', { post: post }) %>
+      <% }); %>
+    </div>
+  <% } else { %>
+    <div class="masonry-col">
+      <% posts.forEach(function (post, i) { if (i % 2 === 0) { %>
+        <%- partial('_partial/post-card', { post: post }) %>
+      <% } }); %>
+    </div>
+    <div class="masonry-col">
+      <% posts.forEach(function (post, i) { if (i % 2 === 1) { %>
+        <%- partial('_partial/post-card', { post: post }) %>
+      <% } }); %>
+    </div>
+  <% } %>
+</section>
+
+<div class="deco-divider"><span></span></div>
+
+<%- partial('_partial/pagination') %>

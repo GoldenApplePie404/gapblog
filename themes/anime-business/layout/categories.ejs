@@ -1,0 +1,21 @@
+<h1 class="page-title">全部分类</h1>
+<%
+  var catMap = {};
+  site.categories.each(function (cat) {
+    if (!catMap[cat.name]) {
+      catMap[cat.name] = { name: cat.name, path: cat.path, count: 0 };
+    }
+    catMap[cat.name].count += cat.posts.length;
+  });
+  var cats = Object.values(catMap).sort(function (a, b) {
+    return a.name.localeCompare(b.name, 'zh-CN');
+  });
+%>
+<div class="category-cloud">
+  <% cats.forEach(function (cat) { %>
+    <a class="category-item" href="<%- url_for(cat.path) %>">
+      <svg class="icon cat-icon"><use xlink:href="<%- url_for('images/icons.svg') %>#icon-folder"></use></svg>
+      <%= cat.name %> <span class="count"><%= cat.count %></span>
+    </a>
+  <% }); %>
+</div>

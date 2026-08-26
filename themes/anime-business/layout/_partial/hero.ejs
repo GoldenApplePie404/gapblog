@@ -1,0 +1,11 @@
+<% var bannerStyle = theme.banner ? 'background-image:url(\'' + url_for(theme.banner) + '\')' : ''; %>
+<section class="hero<%= theme.banner ? ' has-banner' : '' %>" style="<%= bannerStyle %>">
+  <% if (theme.banner) { %><div class="hero-overlay"></div><% } %>
+  <div class="hero-inner">
+    <h1 class="hero-title">
+      <span data-typewriter data-text="<%- config.title %>"></span>
+    </h1>
+    <p class="hero-sub"><span data-typewriter data-text="Welcome~" data-speed="160">Welcome~</span></p>
+  </div>
+  <% if (theme.banner) { %><div class="hero-wave" aria-hidden="true"></div><% } %>
+</section>

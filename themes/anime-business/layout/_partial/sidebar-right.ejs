@@ -1,0 +1,73 @@
+<aside class="sidebar-right">
+  <section class="widget">
+    <h4 class="widget-title">
+      <svg class="icon"><use xlink:href="<%- url_for('images/icons.svg') %>#icon-pen"></use></svg>
+      最新文章
+    </h4>
+    <ul class="widget-list">
+      <% site.posts.sort('-date').limit(6).each(function (p) { %>
+        <li>
+          <a class="wlink" href="<%- url_for(p.path) %>"><%- p.title %></a>
+          <time><%- date(p.date, 'MM-DD') %></time>
+        </li>
+      <% }); %>
+    </ul>
+    <a class="widget-more" href="<%- url_for('/archives/') %>">更多文章
+      <svg class="icon"><use xlink:href="<%- url_for('images/icons.svg') %>#icon-arrow-right"></use></svg>
+    </a>
+  </section>
+
+  <section class="widget">
+    <h4 class="widget-title">
+      <svg class="icon"><use xlink:href="<%- url_for('images/icons.svg') %>#icon-tag"></use></svg>
+      标签云
+    </h4>
+    <div class="widget-tags">
+      <% site.tags.sort('name').limit(14).each(function (tag) { %>
+        <a class="tag-pill" href="<%- url_for(tag.path) %>"># <%= tag.name %></a>
+      <% }); %>
+    </div>
+    <a class="widget-more" href="<%- url_for('/tags/') %>">全部标签
+      <svg class="icon"><use xlink:href="<%- url_for('images/icons.svg') %>#icon-arrow-right"></use></svg>
+    </a>
+  </section>
+
+  <section class="widget widget-categories">
+    <h4 class="widget-title">
+      <svg class="icon"><use xlink:href="<%- url_for('images/icons.svg') %>#icon-folder"></use></svg>
+      分类
+    </h4>
+    <%
+      var catMap = {};
+      site.categories.each(function (cat) {
+        if (!catMap[cat.name]) {
+          catMap[cat.name] = { name: cat.name, path: cat.path, count: 0 };
+        }
+        catMap[cat.name].count += cat.posts.length;
+      });
+      var allCats = Object.values(catMap).sort(function (a, b) {
+        return a.name.localeCompare(b.name, 'zh-CN');
+      });
+      var showCats = allCats.slice(0, 5);
+    %>
+    <ul class="widget-list">
+      <% showCats.forEach(function (cat) { %>
+        <li>
+          <a class="wlink" href="<%- url_for(cat.path) %>"><%= cat.name %></a>
+          <span class="wcount"><%= cat.count %></span>
+        </li>
+      <% }); %>
+    </ul>
+    <% if (allCats.length > 5) { %>
+      <a class="widget-more" href="<%- url_for('/categories/') %>">
+        查看更多分类
+        <svg class="icon"><use xlink:href="<%- url_for('images/icons.svg') %>#icon-arrow-right"></use></svg>
+      </a>
+    <% } %>
+  </section>
+
+  <a class="widget-archive-btn" href="<%- url_for('/categories/') %>">
+    <svg class="icon"><use xlink:href="<%- url_for('images/icons.svg') %>#icon-folder"></use></svg>
+    查看全部分类
+  </a>
+</aside>

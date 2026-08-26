@@ -1,0 +1,31 @@
+<header class="site-header" id="siteHeader">
+  <div class="reading-bar" id="readingBar" data-reading-bar></div>
+  <div class="container header-inner">
+    <a class="logo" href="<%- url_for('/') %>">
+      <span class="logo-mark"><img class="logo-icon" src="<%- url_for('images/site/icon.png') %>" alt="icon"></span>
+      <span class="logo-text"><%- config.title %></span>
+    </a>
+    <% var cur = page.path || ''; %>
+    <% var menuIcons = { '/': 'icon-home', '/archives/': 'icon-archive', '/categories/': 'icon-folder', '/tags/': 'icon-tag', '/about/': 'icon-user' }; %>
+    <nav class="site-nav" id="siteNav" data-nav>
+      <% Object.entries(theme.menu || {}).forEach(function (item) {
+           var label = item[0], link = item[1];
+           var icon = menuIcons[link] || 'icon-dot';
+           var active = link === '/' ? is_home() : cur.indexOf(link.replace(/^\/+/, '')) === 0;
+      %>
+      <a class="nav-link<%= active ? ' active' : '' %>" href="<%- url_for(link) %>">
+        <svg class="icon"><use xlink:href="<%- url_for('images/icons.svg') %>#<%= icon %>"></use></svg>
+        <%= label %>
+      </a>
+      <% }); %>
+    </nav>
+    <div class="search-wrap" data-search>
+      <svg class="icon" aria-hidden="true"><use xlink:href="<%- url_for('images/icons.svg') %>#icon-search"></use></svg>
+      <input class="search-input" type="search" placeholder="搜索文章…" aria-label="搜索文章" autocomplete="off">
+      <div class="search-results" hidden></div>
+    </div>
+    <button class="nav-toggle" id="navToggle" type="button" aria-label="菜单" data-nav-toggle>
+      <span></span><span></span><span></span>
+    </button>
+  </div>
+</header>

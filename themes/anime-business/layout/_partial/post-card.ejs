@@ -1,0 +1,36 @@
+<article class="post-card">
+  <% var h = 0; for (var k = 0; k < post.title.length; k++) h = (h * 31 + post.title.charCodeAt(k)) >>> 0; var coverClass = 'cover-' + (h % 4 + 1); %>
+  <% var plainText = strip_html(post.content || post.excerpt || '').replace(/\s+/g, ''); var minutes = Math.max(1, Math.round(plainText.length / 350)); %>
+  <a class="card-cover <%= coverClass %> <%= post.cover ? '' : 'no-cover' %>" href="<%- url_for(post.path) %>">
+    <% if (post.cover) { %>
+      <img src="<%- url_for(post.cover) %>" alt="<%- post.title %>" loading="lazy">
+    <% } else { %>
+      <svg class="icon"><use xlink:href="<%- url_for('images/icons.svg') %>#icon-book"></use></svg>
+    <% } %>
+    <% if (post.sticky || post.top) { %><span class="cover-badge">置顶</span><% } %>
+    <% if (post.categories && post.categories.length) { %>
+      <span class="cover-cat"><%= post.categories.first().name %></span>
+    <% } %>
+    <span class="cover-time">
+      <svg class="icon"><use xlink:href="<%- url_for('images/icons.svg') %>#icon-clock"></use></svg>
+      <%= minutes %> 分钟
+    </span>
+  </a>
+  <div class="card-body">
+    <h2 class="card-title"><a href="<%- url_for(post.path) %>"><%- post.title %></a></h2>
+    <p class="card-excerpt"><%= strip_html(post.excerpt || post.content) %></p>
+    <div class="card-meta">
+      <span class="meta-item"><svg class="icon"><use xlink:href="<%- url_for('images/icons.svg') %>#icon-archive"></use></svg><time datetime="<%- date(post.date, 'YYYY-MM-DD') %>"><%- date(post.date, 'YYYY-MM-DD') %></time></span>
+      <% if (post.tags && post.tags.length) { %>
+        <span class="meta-item meta-tags">
+          <% post.tags.limit(3).each(function (tag) { %>
+            <a href="<%- url_for(tag.path) %>">#<%= tag.name %></a>
+          <% }); %>
+        </span>
+      <% } %>
+    </div>
+    <a class="card-more" href="<%- url_for(post.path) %>">阅读全文
+      <svg class="icon"><use xlink:href="<%- url_for('images/icons.svg') %>#icon-arrow-right"></use></svg>
+    </a>
+  </div>
+</article>

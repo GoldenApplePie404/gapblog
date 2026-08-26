@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="<%- config.language || 'zh-CN' %>">
+<head>
+  <%- partial('_partial/head') %>
+</head>
+<body<%= theme.background ? ' class="has-bg"' : '' %> style="<%= theme.background ? 'background-image:url(\'' + url_for(theme.background) + '\')' : '' %>">
+  <%- partial('_partial/header') %>
+  <% if (is_home() && page.current === 1) { %>
+    <%- partial('_partial/hero') %>
+  <% } %>
+  <main class="site-main">
+    <div class="container page-grid">
+      <%- partial('_partial/sidebar-left') %>
+      <div class="content-main"><%- body %></div>
+      <%- partial('_partial/sidebar-right') %>
+    </div>
+  </main>
+  <%- partial('_partial/footer') %>
+  <button class="back-top" id="backTop" type="button" aria-label="回到顶部" data-back-top>
+    <svg class="icon"><use xlink:href="<%- url_for('images/icons.svg') %>#icon-arrow-up"></use></svg>
+  </button>
+  <!-- 跳转/加载指示器：旋转条 + 波浪点（无 JS 时隐藏，避免遮住页面） -->
+  <div id="site-preloader" class="active" aria-hidden="true">
+    <div class="preloader-spinner" role="status" aria-label="加载中"></div>
+    <div class="preloader-dots"><i></i><i></i><i></i></div>
+  </div>
+  <!-- 漂浮暖橙圆斑（背景几何动效，fixed 底层不抢内容） -->
+  <div class="bg-deco" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i></div>
+  <noscript><style>#site-preloader{display:none!important}</style></noscript>
+  <!-- 音乐播放器：右下角圆钮 + 点击展开底部播放条（无歌单时隐藏） -->
+  <button class="mp-float" id="mpFloat" type="button" hidden aria-label="打开音乐播放器">
+    <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 3v10.55c-.59-.34-1.27-.55-2-.55-2.21 0-4 1.79-4 4s1.79 4 4 4 4-1.79 4-4V7h4V3h-6z"/></svg>
+  </button>
+  <div class="music-player" id="musicPlayer" data-music hidden aria-label="音乐播放器">
+    <div class="mp-inner">
+      <span class="mp-cover" data-mp-cover aria-hidden="true"></span>
+      <div class="mp-info">
+        <span class="mp-title" data-mp-title>暂无音乐</span>
+        <span class="mp-artist" data-mp-artist></span>
+      </div>
+      <button class="mp-btn mp-prev" type="button" data-mp-prev aria-label="上一首">
+        <svg viewBox="0 0 24 24"><path d="M6 6h2v12H6zm3.5 6l8.5 6V6z"/></svg>
+      </button>
+      <button class="mp-btn mp-toggle" type="button" data-mp-toggle aria-label="播放/暂停">
+        <svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>
+      </button>
+      <button class="mp-btn mp-next" type="button" data-mp-next aria-label="下一首">
+        <svg viewBox="0 0 24 24"><path d="M16 6h2v12h-2zM6 18l8.5-6L6 6z"/></svg>
+      </button>
+      <input class="mp-progress" type="range" data-mp-progress min="0" max="0" step="0.1" value="0" aria-label="播放进度">
+      <span class="mp-time" data-mp-time>0:00 / 0:00</span>
+      <button class="mp-btn mp-mode" type="button" data-mp-mode aria-label="播放模式">
+        <svg viewBox="0 0 24 24"><path d="M7 7h10v3l4-4-4-4v3H5v6h2V7zm10 10H7v-3l-4 4 4 4v-3h12v-6h-2v4z"/></svg>
+      </button>
+      <span class="mp-vol">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 9v6h4l5 5V4L7 9H3z"/></svg>
+        <input type="range" data-mp-volume min="0" max="1" step="0.02" value="0.8" aria-label="音量">
+      </span>
+      <button class="mp-collapse" type="button" data-mp-collapse aria-label="收起播放器">
+        <svg viewBox="0 0 24 24"><path d="M12 16l-6-6 1.4-1.4L12 13.2l4.6-4.6L18 10z"/></svg>
+      </button>
+    </div>
+  </div>
+  <script>
+    // 兜底：若加载指示器未被 JS 正常关闭（模块异常等），3 秒后强制隐藏，避免遮挡页面
+    setTimeout(function () {
+      var p = document.getElementById('site-preloader');
+      if (p) p.classList.remove('active');
+    }, 3000);
+  </script>
+  <script>window.__AB__ = { base: '<%- url_for('/') %>', features: <%- JSON.stringify(theme.features || {}) %> };</script>
+  <script>
+    // 页面加载完成后触发整体淡入（与 CSS body 转场配合）
+    document.addEventListener('DOMContentLoaded', function () {
+      requestAnimationFrame(function () { document.body.classList.add('is-loaded'); });
+    });
+  </script>
+  <script type="module" src="<%- url_for('js/main.js') %>"></script>
+</body>
+</html>

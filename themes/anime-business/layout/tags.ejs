@@ -1,0 +1,7 @@
+<h1 class="page-title">标签云</h1>
+<div class="tag-cloud">
+  <% site.tags.sort('name').each(function (tag) { %>
+    <% var size = Math.min(1.5, 0.9 + Math.log(tag.posts.length + 1) * 0.18); %>
+    <a class="tag-pill tag-cloud-item" style="font-size:<%= size.toFixed(2) %>em" href="<%- url_for(tag.path) %>"># <%= tag.name %> <span class="count"><%= tag.posts.length %></span></a>
+  <% }); %>
+</div>

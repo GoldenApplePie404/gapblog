@@ -1,0 +1,65 @@
+<aside class="sidebar">
+  <section class="widget author-card">
+    <img class="author-avatar" src="<%- url_for('images/mascot.svg') %>" alt="avatar">
+    <h3 class="author-name"><%- config.author %></h3>
+    <p class="author-bio"><%= theme.footer && theme.footer.about ? theme.footer.about : '以二次元的热情，做正经事。' %></p>
+    <div class="author-social">
+      <% Object.entries(theme.social || {}).forEach(function (item) { %>
+        <% var icon = ({ github: 'icon-github', email: 'icon-mail' })[item[0].toLowerCase()] || 'icon-link'; %>
+        <a href="<%- item[1] %>" target="_blank" rel="noopener" title="<%= item[0] %>" aria-label="<%= item[0] %>">
+          <svg class="icon"><use xlink:href="<%- url_for('images/icons.svg') %>#<%= icon %>"></use></svg>
+        </a>
+      <% }); %>
+    </div>
+  </section>
+
+  <section class="widget widget-stats">
+    <div class="wstat"><b><%= site.posts.length %></b><span>文章</span></div>
+    <div class="wstat"><b><%= site.tags.length %></b><span>标签</span></div>
+    <div class="wstat"><b><%= site.categories.length %></b><span>分类</span></div>
+  </section>
+
+  <section class="widget">
+    <h4 class="widget-title">最新文章</h4>
+    <ul class="widget-list">
+      <% site.posts.sort('-date').limit(5).each(function (p) { %>
+        <li>
+          <a class="wlink" href="<%- url_for(p.path) %>"><%- p.title %></a>
+          <time><%- date(p.date, 'MM-DD') %></time>
+        </li>
+      <% }); %>
+    </ul>
+    <a class="widget-more" href="<%- url_for('/archives/') %>">更多文章
+      <svg class="icon"><use xlink:href="<%- url_for('images/icons.svg') %>#icon-arrow-right"></use></svg>
+    </a>
+  </section>
+
+  <section class="widget">
+    <h4 class="widget-title">标签云</h4>
+    <div class="widget-tags">
+      <% site.tags.sort('name').limit(12).each(function (tag) { %>
+        <a class="tag-pill" href="<%- url_for(tag.path) %>"># <%= tag.name %></a>
+      <% }); %>
+    </div>
+    <a class="widget-more" href="<%- url_for('/tags/') %>">全部标签
+      <svg class="icon"><use xlink:href="<%- url_for('images/icons.svg') %>#icon-arrow-right"></use></svg>
+    </a>
+  </section>
+
+  <section class="widget">
+    <h4 class="widget-title">分类</h4>
+    <ul class="widget-list">
+      <% site.categories.sort('name').each(function (cat) { %>
+        <li>
+          <a class="wlink" href="<%- url_for(cat.path) %>"><%= cat.name %></a>
+          <span class="wcount"><%= cat.posts.length %></span>
+        </li>
+      <% }); %>
+    </ul>
+  </section>
+
+  <a class="widget-archive-btn" href="<%- url_for('/archives/') %>">
+    <svg class="icon"><use xlink:href="<%- url_for('images/icons.svg') %>#icon-archive"></use></svg>
+    查看全部归档
+  </a>
+</aside>

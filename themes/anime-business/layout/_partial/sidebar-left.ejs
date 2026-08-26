@@ -1,0 +1,44 @@
+<aside class="sidebar-left">
+  <section class="widget author-card" id="authorCard">
+    <button class="card-flip-btn" type="button" data-card-flip aria-label="切换目录" title="文章目录">
+      <svg viewBox="0 0 24 24"><path d="M3 5h14v2H3zm0 6h14v2H3zm0 6h9v2H3z"/><path d="M19.5 6.5l2.5 2.5-5 5-2 1 1-2 3.5-6.5z"/></svg>
+    </button>
+    <!-- 正面：博主信息 -->
+    <div class="author-front">
+      <span class="author-decoration" aria-hidden="true"></span>
+      <img class="author-avatar" src="<%- url_for('images/site/icon.png') %>" alt="avatar">
+      <h3 class="author-name"><%- config.author %></h3>
+      <p class="author-bio"><%= theme.footer && theme.footer.about ? theme.footer.about : '以二次元的热情，做正经事。' %></p>
+      <div class="author-social">
+        <% var socialIcons = { github: 'icon-github', bilibili: 'icon-bilibili' }; %>
+        <% Object.entries(theme.social || {}).forEach(function (item) { %>
+          <% var key = item[0].toLowerCase(); %>
+          <% if (!socialIcons[key]) return; %>
+          <% var icon = socialIcons[key]; %>
+          <a href="<%- item[1] %>" target="_blank" rel="noopener" title="<%= item[0] %>" aria-label="<%= item[0] %>">
+            <svg class="icon"><use xlink:href="<%- url_for('images/icons.svg') %>#<%= icon %>"></use></svg>
+          </a>
+        <% }); %>
+      </div>
+      <div class="author-stats">
+        <div class="astat">
+          <svg class="icon"><use xlink:href="<%- url_for('images/icons.svg') %>#icon-pen"></use></svg>
+          <b><%= site.posts.length %></b><span>文章</span>
+        </div>
+        <div class="astat">
+          <svg class="icon"><use xlink:href="<%- url_for('images/icons.svg') %>#icon-tag"></use></svg>
+          <b><%= site.tags.length %></b><span>标签</span>
+        </div>
+        <div class="astat">
+          <svg class="icon"><use xlink:href="<%- url_for('images/icons.svg') %>#icon-folder"></use></svg>
+          <b><%= site.categories.length %></b><span>分类</span>
+        </div>
+      </div>
+    </div>
+    <!-- 背面：文章目录（自动解析 h1~h3） -->
+    <div class="author-back">
+      <h4 class="toc-title">文章目录</h4>
+      <nav class="toc-list" data-toc aria-label="文章目录"></nav>
+    </div>
+  </section>
+</aside>
