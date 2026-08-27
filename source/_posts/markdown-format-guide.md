@@ -4,7 +4,7 @@ date: 2026-08-25 23:59:00
 tags: [Markdown, 教程]
 categories: [教程]
 img_dir: markdown-format-guide
-cover: /images/posts/markdown-format-guide/fm.jpg
+cover: /images/posts/markdown-format-guide/fm.webp
 ---
 
 这篇示例文章覆盖本站支持的全部书写格式：多级标题、引用、链接、表格、代码块、**LaTeX 公式**、**Mermaid 图表**等。你可以直接复制任意小节到自己的文章里使用。
@@ -214,10 +214,10 @@ gantt
 
 ```md
 <!-- 文章配图（放 images/posts/ 下） -->
-![文章配图](/images/posts/my-post/photo.jpg)
+![文章配图](/images/posts/my-post/photo.webp)
 
 <!-- 封面（front-matter 中配置） -->
-cover: /images/posts/my-post/cover.jpg
+cover: /images/posts/my-post/cover.webp
 ```
 
 本文章的配图目录是 `markdown-format-guide`（front-matter 的 `img_dir` 字段），下面这张图就是用标签语法引用的：

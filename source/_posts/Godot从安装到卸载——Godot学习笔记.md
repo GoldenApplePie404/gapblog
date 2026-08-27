@@ -1,9 +1,9 @@
 ---
 title: "Godot从安装到卸载——Godot学习笔记"
 img_dir: godot-notes
-cover: /images/posts/godot-notes/fm.png
+cover: /images/posts/godot-notes/fm.webp
 date: 2025-07-29 00:17:37
-categories: ["教程", "计算机"]
+categories: [["教程"], ["计算机"]]
 tags: ["Godot", "教程", "游戏开发", "笔记", "计算机"]
 ---
 游戏引擎就像一座"虚拟世界工厂"。本篇从游戏引擎概念讲起，带你认识开源轻量的 Godot：节点树架构、类 Python 的 GDScript 语法，以及从官网/Steam 安装到上手开发的完整学习笔记。
@@ -29,7 +29,7 @@ Godot不仅支持Windows、macOS、Linux等主流桌面操作系统，还覆盖�
 
 安装完毕后，打开Godot，在出现的界面中找到创建，以此来创建我们的第一个项目。
 
-![](/images/posts/godot-notes/godot1.png)
+![](/images/posts/godot-notes/godot1.webp)
 
 ## 二、认识Godot
 
@@ -37,7 +37,7 @@ Godot不仅支持Windows、macOS、Linux等主流桌面操作系统，还覆盖�
 
 完成项目创建后，我们将正式进入 Godot 编辑器的核心工作界面——此前显示的项目列表仅是入口，此刻才是开发的主舞台。接下来，让我们一同探索一下这个界面。
 
-![](/images/posts/godot-notes/godot2-1024x544.png)
+![](/images/posts/godot-notes/godot2-1024x544.webp)
 
 整个界面分成了六大板块：顶栏菜单（①）、场景节点列表（②）、文件系统（③）、游戏场景（④）、底部面板（⑤）、检查器（⑥）。
 
@@ -407,13 +407,13 @@ func _process(delta):
 
 #### （一）游戏边界
 
-![](/images/posts/godot-notes/godot3.png)
+![](/images/posts/godot-notes/godot3.webp)
 
 首先，在新建的项目中，我们要先设置好游戏边界。添加一个名为“walls”的 `Node2D` 节点，接着在“walls”节点下添加两个 `StaticBody2D` 节点，分别命名为“top”和“bottom”，并在“top”“bottom”节点下各添加一个 `CollisionShape2D` 节点。然后，再添加两个 `Area2D` 节点，分别命名为“LeftGoal”和“RightGoal”，并为这两个 `Area2D` 节点各自添加一个 `CollisionShape2D` 节点。完成这些操作后，你的场景列表应如左图所示（需注意节点之间的父子关系，例如，“walls”节点的子节点有“top”“bottom”等，“LeftGoal”节点的子节点有对应的 `CollisionShape2D` 节点 ）。
 
 你肯定已经留意到，部分节点的右侧出现了警告标志。这其实是因为你尚未为这些节点设置必要的属性。要知道，`CollisionShape2D` 节点必须指定 `Shape` 属性才行。你可以先选中出现警告的 `CollisionShape2D` 节点，接着查看右侧的检查器面板，在其中找到 “`Shape`” 属性，然后为它添加一个 `RectangleShape2D` 形状。添加完成后，在 2D 编辑界面的左上角，你会看到一个方形的 2D 形状生成出来。此时，你只需通过拖拽、缩放操作，将这个方形调整到合适的位置和大小就可以了。对于其他有类似警告的节点，处理方式也是一样的。完成所有节点的调整后，场景效果应如下图所示：
 
-![](/images/posts/godot-notes/godot4-1024x598.png)
+![](/images/posts/godot-notes/godot4-1024x598.webp)
 
 至此，该场景创建完毕，你可以将其保存并命名为**`game.tscn`**。*其实，你还可以为左右两侧边界分别添加一个 `StaticBody2D` 节点，用于实现乒乓球的反弹效果，这样游戏就能持续运行（若不添加其他终止条件，一方得分后球仍会回弹）。不过要注意，`Area2D` 的 `CollisionShape2D` 区域必须比 `StaticBody2D` 的 `CollisionShape2D` 区域稍大一些（或稍微露出一点点），以确保能正常触发区域检测。*
 
@@ -436,7 +436,7 @@ func _process(delta):
 
 经过一番合理的放置和调整后，你应该能够在场景中呈现出如下所示的布局：
 
-![](/images/posts/godot-notes/godot5.png)
+![](/images/posts/godot-notes/godot5.webp)
 
 #### （四）脚本
 
@@ -660,7 +660,7 @@ func add_score(player_id: int):
 
 然后，你需要将ui.tscn场景拖入至主场景的合适位置，如下图所示：
 
-![](/images/posts/godot-notes/godot6-1024x544.png)
+![](/images/posts/godot-notes/godot6-1024x544.webp)
 
 接下来，我们需要写一个脚本用于实现界面交互的逻辑（包括界面的换出、按钮的逻辑）。为之前ui.tscn场景的panel节点创建一个脚本“ui.gd”，接着写入：
 
@@ -706,15 +706,15 @@ get_tree().paused = false
 
 什么是动作帧序列图？你可以把它想象成“动画时间轴”，将角色不同姿势的图像（或骨骼动画数据）按时间顺序排列。在Godot 中，这些帧序列会被整合到动画系统里，通过代码或事件触发切换。接下来我们来实战一下。先在godot中创建一个CharacterBody2D节点，并为其依次添加CollisionShape2D和AnimatedSprite2D子节点，其中AnimatedSprite2D是我们需要重点关注的。选中AnimatedSprite2D，并在右侧的检查器中找到Animation下的Sprite Frames属性，新建一个SpriteFrames，在底部面板，你可以看到：
 
-![](/images/posts/godot-notes/image-2.png)
+![](/images/posts/godot-notes/image-2.webp)
 
 现在找一个**动作帧序列图**，它应该长这样：
 
-![](/images/posts/godot-notes/image-3.png)
+![](/images/posts/godot-notes/image-3.webp)
 
 如你所见，这个动画帧序列面板中展示了角色不同动作的帧排列，当前已包含站立、走路、攻击等基础动作。现在需要在SpriteFrames资源中新建一个名为"idle"的站立动画：点击面板左上角的"新建动画"按钮创建空序列，接着选择"从精灵表中添加帧"选项。在弹出的精灵表编辑器中，你可以通过拖拽边框精确裁剪每帧图像区域，按住Shift键可批量选择连续帧图片，确认后这些帧将自动填充到时间轴上。完成添加后记得在右侧属性面板调整"每秒帧数(FPS)"参数控制播放速度，还可以通过勾选"循环播放"选项让角色保持自然呼吸动画效果。
 
-![](/images/posts/godot-notes/image-4.png)
+![](/images/posts/godot-notes/image-4.webp)
 
 接下来就是利用脚本让角色能够真正动起来（你需要依次添加按键映射以及相关的动画）：
 
@@ -763,13 +763,13 @@ func update_animation() -> void:
 
 在绘制游戏地图场景时，需根据具体视角类型灵活调整图层排列策略：以第三人称俯视视角游戏为例，基础底层元素（如草地）应置于场景树根节点位置，确保其处于最底层；树、墙、花、石头等中层元素则需创建新节点作为草地的子节点，置于其次……这一过程中需严格遵循场景树节点的层级顺序，通过合理的图层管理实现视觉效果的正确叠加与交互逻辑的精准呈现。
 
-![](/images/posts/godot-notes/image-5.png)
+![](/images/posts/godot-notes/image-5.webp)
 
 在完成地图场景绘制后，实际运行时可能出现玩家角色无故穿透障碍物（如树、石头等）的现象，这通常是由于未正确配置物理碰撞层导致的。
 
 其实我们可以直接在TileMapLayer节点内为相应的图块设置物理碰撞层。首先，在检查器中找到Tile Set属性下的Physics Layer，点击添加元素。然后回到底部面板的TileSet，找到绘制——选择属性编辑器——物理层，选择相应的图库进行物理层的绘制：
 
-![](/images/posts/godot-notes/image-6.png)
+![](/images/posts/godot-notes/image-6.webp)
 
 在示例的第三人称俯视视角2D游戏中，我只绘制了整棵树的树基部分。这是因为当角色移动到树后时，需要呈现"被树干遮挡"的视觉效果——但从游戏合理性考虑，角色不应被树基（贴近地面的部分）阻挡移动路径。而且，为实现分层遮挡效果，还需要调整瓦片集的Z索引设置——具体操作路径为：在TileSet编辑器中选择对应图块，找到渲染中的Z索引参数并设置较大数值。又或者是，在绘制里，选择渲染中的Z索引，设置数字后直接对着相应的图块绘制即可。这样设置的原因是：要让树干和树叶的渲染层级高于角色，确保它们始终显示在角色前方，从而形成自然的遮挡关系。现在，大功告成，你可以直接在你的游戏场景里绘制设置好的瓦片集了。
 
@@ -779,7 +779,7 @@ func update_animation() -> void:
 
 Godot 的信号机制让游戏开发更灵活：节点通过发出信号（如按钮的 pressed）与其他对象解耦通信，无需硬编码关联；内置大量实用信号（如碰撞检测、动画结束），还支持自定义信号（如 enemy\_defeated）实现特定逻辑；典型应用包括点击按钮加载关卡、进入区域触发音效、击败敌人更新UI等场景。现在，我们通过一个游戏暂停菜单的示例来演示信号机制的实际应用。在大多数游戏中，UI系统通常包含多层交互菜单，每个菜单项都对应着特定的功能逻辑。以我们创建的暂停菜单为例：该界面通过两个功能按钮实现核心交互——"继续"按钮用于恢复游戏进程，而"重开"按钮则会触发游戏重新加载（在节点树中我还加入了AudioStreamPlayer节点用于音效）：
 
-![](/images/posts/godot-notes/image-7.png)
+![](/images/posts/godot-notes/image-7.webp)
 
 为这个场景绑定一个脚本，并添加以下代码：
 
@@ -839,7 +839,7 @@ func _on_reset_button_pressed() -> void:
 
 接下来进行信号绑定的具体操作：在节点树中选中"继续游戏"按钮节点，在右侧Inspector面板的Node选项卡下找到pressed()信号，右键选择"连接"（Connect）。在弹出的连接对话框中，将目标节点指定为场景根节点PauseMenu（该节点需已附加脚本），此时系统默认会生成一个名为\_on\_button\_pressed的空方法。但因为我们已预先在PauseMenu脚本中定义了\_on\_continue\_button\_pressed()方法来专门处理继续游戏逻辑，所以应手动选择这个现有方法进行绑定。确认后，当玩家点击按钮时，按钮的pressed()信号将通过引擎自动传递至PauseMenu脚本，并触发对应的\_on\_continue\_button\_pressed()方法执行游戏恢复逻辑。
 
-![](/images/posts/godot-notes/image-8.png)
+![](/images/posts/godot-notes/image-8.webp)
 
 在上面的示例中，我们仅仅使用的是按钮节点的一个预设信号pressed()进行逻辑的串联，但其实，我们还可以在godot里自定义一个信号，需要时发射它，让其他节点监听并响应。
 

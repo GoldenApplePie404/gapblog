@@ -4,7 +4,7 @@ img_dir: mc-server-guide
 date: 2023-09-15 18:33:27
 tags: ["我的世界", "教程", "服务器"]
 categories: ["教程"]
-cover: /images/posts/mc-server-guide/mc4-1024x534.png
+cover: /images/posts/mc-server-guide/mc4-1024x534.webp
 
 ---
 生存、创造、PVP……Minecraft 服务器有着丰富的类型与玩法。本指南带你认识各类服务器的特色，并一步步手把手教你架设一台属于自己的 MC 服务器。
@@ -62,8 +62,8 @@ Fabric：另一个用于modding的核心，提供了更轻量级和快速的模�
 
 创建服务端，你首先得创建个文件夹专门拿来装你服务端文件，文件夹名可以自行命名。然后你要进入[Spigot的下载界面](https://getbukkit.org/download/spigot)选择个你想要的版本下载(Download)，核心版本对应你MC的版本，比如我要玩1.16.5的，那么我可以下载1.16.5的 Spigot核心。在跳出来的界面点击Spigot-1.16.5.jar（如下图）。
 
-![](/images/posts/mc-server-guide/mc1-1024x639.png)
-![](/images/posts/mc-server-guide/mc2.png)
+![](/images/posts/mc-server-guide/mc1-1024x639.webp)
+![](/images/posts/mc-server-guide/mc2.webp)
 
 ### **二．唤醒沉睡的核心**
 
@@ -220,7 +220,7 @@ PAUSE
 
 **在这边特别说明一下，保存时将其编码修改为 ANSI，防止中文出现乱码。**
 
-![](/images/posts/mc-server-guide/mc3.png)
+![](/images/posts/mc-server-guide/mc3.webp)
 
 写完脚本后，将.txt换成.bat，你可以在保存时像上图一样将保存类型选成“所有文件”，并且在文件名后加上.bat，你也可以将文件扩展名直接打开，然后直接重命名。之后双击这个脚本。
 
@@ -252,11 +252,11 @@ EXIT：用于退出脚本的执行。
 
 弹出窗口后，这时候你会发现文件夹内多出了一些新的文件，你需要先找到eula.txt,打开后将里面的eula=false 的false换成true, 这个eula文件就是协议，改成true就相当于同意。然后保存好协议后再次双击启动脚本，等它加载完并出现”Done”，就说明这个服务端已经创建完毕。
 
-![](/images/posts/mc-server-guide/mc4-1024x534.png)
+![](/images/posts/mc-server-guide/mc4-1024x534.webp)
 
 这时候你再次查看文件夹，你会发现又多出了一些文件，接下来我将会介绍每个文件（夹）的作用。特别说明一下，划线的文件或文件夹是要重点关注的。
 
-![](/images/posts/mc-server-guide/mc5.png)
+![](/images/posts/mc-server-guide/mc5.webp)
 
 **logs文件夹**：存放服务器日志的文件夹。
 
@@ -420,13 +420,13 @@ json文件：JSON（JavaScript Object Notation）是一种基于文本的数据�
 
 下载完毕后，打开启动器，在樱花官网的首页里找到你的访问密钥（注意这个访问密钥相当于密码，请妥善保管！），将其复制在启动器的相应位置，这样你就可以登录樱花启动器了。在隧道界面点击“+”，然后选择java进程，并在右下角选择合适的节点，选择延迟低的即可，最后点击创建（如下图）。
 
-![](/images/posts/mc-server-guide/mc6.png)
-![](/images/posts/mc-server-guide/mc7-1024x709.png)
+![](/images/posts/mc-server-guide/mc6.webp)
+![](/images/posts/mc-server-guide/mc7-1024x709.webp)
 
 回到隧道界面，将你刚刚创建的隧道打开，启动成功后到日志界面，找到连接IP。将其复制到服务器地址里，这样你和你的小伙伴都可以进入到你的服务器里了。
 
-![](/images/posts/mc-server-guide/mc10.png)
-![](/images/posts/mc-server-guide/mc11-1024x549.png)
+![](/images/posts/mc-server-guide/mc10.webp)
+![](/images/posts/mc-server-guide/mc11-1024x549.webp)
 
 这里只演示樱花的内网穿透工具的使用方法，对于其它的穿透工具请自行查看相关教程。或者你可以尝试自己购买/租用一台服务器主机，参考教程：[我的世界Minecraft服务器硬件配置需求](https://www.bilibili.com/video/BV1u84y1h7wC/?spm_id_from=333.337.search-card.all.click&vd_source=2ae35f299b5a9f754c695bb1e968e1bd)、[只要239元？~从选购硬件开始~ 一步步教你搭建MC服务器](https://www.bilibili.com/video/BV18A411e78d/?spm_id_from=333.337.search-card.all.click&vd_source=2ae35f299b5a9f754c695bb1e968e1bd)。又或者你可以选择在一些不错的服务器租用平台租服，推荐：[PixelCloud](https://pixelcloud.cn/)、[喵喵互联](https://miaomiao.games/index.php)，这俩个都提供保姆般的教程，并且对新手十分友好。
 
@@ -592,17 +592,17 @@ json文件：JSON（JavaScript Object Notation）是一种基于文本的数据�
 
 在这里还得提醒一下，在下载插件时留心是否有汉化版本或者汉化配置文件，因为很多插件都来源于国外，搬运者一般会提供汉化。如果没有汉化，你可以试着找该插件的语言配置文件，并尝试自己翻译，实在不行就找人帮忙或者机翻吧。不过，汉化也需要用心，因为一个好的汉化可以给玩家提供一个更加流畅和沉浸的游戏体验。
 
-![](/images/posts/mc-server-guide/mc13-1024x550.png)
+![](/images/posts/mc-server-guide/mc13-1024x550.webp)
 
 *某建筑战争插件的英文配置文件（请忽视背景图片x）*
 
-![](/images/posts/mc-server-guide/mc14-1024x550.png)
+![](/images/posts/mc-server-guide/mc14-1024x550.webp)
 
 *经过汉化后的语言文件，充满活力，让人眼前一亮（by 平安小马国）*
 
 在汉化时要注意，不要将不需要汉化的地方给汉化了，这样非常有可能导致插件无法运行。比如一些占位符，如%player%、%time%，也有可能是用“{}”的，如{player}、{time}。还有就是一些颜色代码/格式（化）代码，如&a、&e之类的（在某些特定的环境或插件中，“&”可以更换为“§”），具体可以参考下面的图片。
 
-![](/images/posts/mc-server-guide/mc15.png)
+![](/images/posts/mc-server-guide/mc15.webp)
 
 总的来说，为了实现某一功能，你需要在各个资源站寻找相关插件，并且仔细的阅读插件的使用教程，熟知基本指令和配置文件的语法结构，同时你要关注该插件的权限节点和汉化配置。当服务器添加了这个插件后，多做几次测试，不仅能测试该插件的可行性、兼容性，而且还能让你熟悉这个插件的使用方法。
 
@@ -626,7 +626,7 @@ json文件：JSON（JavaScript Object Notation）是一种基于文本的数据�
 
 首先来简单的看一下我的世界地图文件的结构，如下图（此地图的版本为1.18.2）。
 
-![](/images/posts/mc-server-guide/mc16.png)
+![](/images/posts/mc-server-guide/mc16.webp)
 
 **advancements**：存储玩家在游戏中获得的进度的文件夹。
 
@@ -668,17 +668,17 @@ json文件：JSON（JavaScript Object Notation）是一种基于文本的数据�
 
 另外，还有一种称为数据包（Datapack）的方式可以增加 MC 的功能。数据包是一种功能扩展机制，它允许玩家和开发者通过添加自定义的函数、标签、配方和进度等内容，来丰富游戏玩法。数据包允许你对基本游戏进行修改和扩展，以实现你所需的功能。
 
-![](/images/posts/mc-server-guide/mc17.png)
+![](/images/posts/mc-server-guide/mc17.webp)
 
 *使用命令方块集(上图)实现一些简单炫酷的粒子效果(下图)*
 
-![](/images/posts/mc-server-guide/mc18.png)
+![](/images/posts/mc-server-guide/mc18.webp)
 
 数据包可用于覆盖或添加新的进度、维度、函数、战利品表、谓词、配方、结构、标签、伤害类型、自定义世界生成和生物群系，而不进行任何代码修改。简单来说，数据包类似于插件，但插件使用的是java编写，而数据包是用MC内部指令编写。同时你可以把它当作命令方块集的集成代码文件。注意，数据包是1.13以后出现的，且只适用于java版。具体可以看这一篇介绍：
 
 [数据包 - Minecraft Wiki，最详细的我的世界百科 (fandom.com)](https://minecraft.fandom.com/zh/wiki/%E6%95%B0%E6%8D%AE%E5%8C%85)
 
-![](/images/posts/mc-server-guide/mc19-1024x642.png)
+![](/images/posts/mc-server-guide/mc19-1024x642.webp)
 
 *用数据包整出来的粒子特效（光影，我加了光影!）*
 
@@ -710,7 +710,7 @@ Bungeecord是一种Minecraft服务器代理软件，它允许玩家在多个不�
 
 首先你需要[下载BungeeCord](https://ci.md-5.net/job/BungeeCord/)，下载完成后将其放入一个新建文件夹内，注意，下图内容均要下载。
 
-![](/images/posts/mc-server-guide/mc20.png)
+![](/images/posts/mc-server-guide/mc20.webp)
 
 然后将文件按照一定结构放置（如下图）
 
@@ -732,8 +732,8 @@ Bungeecord是一种Minecraft服务器代理软件，它允许玩家在多个不�
 
 └─          └─reconnect\_yaml.jar
 
-![](/images/posts/mc-server-guide/mc21-1024x564.png)
-![](/images/posts/mc-server-guide/mc22-1024x564.png)
+![](/images/posts/mc-server-guide/mc21-1024x564.webp)
+![](/images/posts/mc-server-guide/mc22-1024x564.webp)
 
 然后和spigot端一样也要写一个启动脚本用于开启BungeeCord。
 
@@ -747,7 +747,7 @@ Pause
 
 再然后将文件后缀改成.bat，并自行命名。完成后双击启动，出现以下界面就说明启动成功了。
 
-![](/images/posts/mc-server-guide/mc23-1024x534.png)
+![](/images/posts/mc-server-guide/mc23-1024x534.webp)
 
 这时候使用 end 关掉窗口。进入文件夹找到Config.yml开始修改配置文件。打开后是这样的（已将重要的配置标上了注释）：
 
@@ -835,7 +835,7 @@ servers:               # 子服列表
 
 大部分情况，你都可以在MC资源站中找到适合你服务器的地图，比如[MC Maps](https://www.minecraftmaps.com/)、[MC Admin](https://www.mcadmin.cn/)、[PlanetMC](https://www.planetminecraft.com/)等。如果没有合适的地图，你可以自己尝试搭建一个，或者和其他人团队合作。要想搭建一个漂亮的地图，很考验你的艺术审美和建筑功底。找到一个合适的地图后就是将它进行装饰，比如添加一些有用的全息字用于传递信息。
 
-![](/images/posts/mc-server-guide/image-2-1024x571.png)
+![](/images/posts/mc-server-guide/image-2-1024x571.webp)
 
 你可以试用相关插件编辑全息字，因为这样非常方便。当然使用指令也是可以的，大概原理就是通过summon指令召唤个隐形的并且命名的盔甲架，指令如下：
 
@@ -855,7 +855,7 @@ servers:               # 子服列表
 
 菜单通常是指游戏中的交互界面。通过菜单，玩家可以进行各种操作和设置，比如选择物品、调整设置、查看任务等。菜单可以帮助玩家更方便地管理自己的游戏进程和进行相应的配置。一个良好的服务器菜单应该是清晰、简洁、易于导航并具有可自定义的功能。它应该提供玩家所需的选项，并通过美观的视觉效果增强用户体验。你可以从菜单的大小、标题、布局、字体颜色、符号、功能等方面入手，利用这些元素设计出一个完美的菜单。
 
-![](/images/posts/mc-server-guide/menu.png)
+![](/images/posts/mc-server-guide/menu.webp)
 
 *(万驹同源生存服的菜单，基于CommandPanels)*
 
@@ -883,17 +883,17 @@ servers:               # 子服列表
 
 当你购买了一个自己的域名后，你要做的就是解析。整个域名的作用就可以理解成，访问一个地址，然后通过域名的解析，访问到另一个地址，这一连接可以通过域名解析来完成。域名的解析分为好多种，来实现多种不同地址的解析。图示如下:
 
-![](/images/posts/mc-server-guide/image.png)
+![](/images/posts/mc-server-guide/image.webp)
 
 通常，IP地址初始为 XXX.XXX.XXX.XXX ，这就叫做数字IP，假如我们的ip为sdns.hka2.starzv.com.，而且我们买好的域名为 goldenapplepie.xyz ,如果要将地址 blog.goldenapplepie.xyz 解析到 sdns.hka2.starzv.com.（以我博客为例） ，在你的域名提供商那边添加一个解析记录，就像这样：
 
-![](/images/posts/mc-server-guide/image-3-1024x95.png)
+![](/images/posts/mc-server-guide/image-3-1024x95.webp)
 
 解析完成后就可以通过blog.goldenapplepie.xyz来访问了。
 
 对于MC服务器，如果服务器提供商提供的是一串数字IP，那么得做个额外操作。如下图：
 
-![](/images/posts/mc-server-guide/image-1-1024x108.png)
+![](/images/posts/mc-server-guide/image-1-1024x108.webp)
 
 先用IP创建一个新域名的解析记录（A记录），这个新域名类似于桥梁，上面图片的例子就是gappdc.goldenapplepie.xyz，其对应的IP为XX.XX.XXX.XXX(打码x)，然后继续利用这个新域名创建一条新的解析记录（SRV记录，要按照格式填写：优先级、空格、权重、空格、端口、空格、主机名），最后在主机记录填写\_minecraft.\_tcp.xxx，本例中xxx即为mcpdc,所以最终你的MC服务器地址为：mcpdc.goldenapplepie.xyz，解析完成且DNS缓存刷新后进入游戏填上这个地址就可以访问服务器了。
 
@@ -1341,7 +1341,7 @@ world-settings:
 
 Paper 提供了一个/mspt命令，该命令将告诉你服务器计算最近的回应所花费的时间。如果你看到的第一个和第二个值低于 50，那么恭喜！你的服务器没有滞后！如果第三个值超过 50，则意味着至少有 1 个刻度需要更长的时间。这是完全正常的，并且不时发生，所以不要惊慌。
 
-![](/images/posts/mc-server-guide/mc27.png)
+![](/images/posts/mc-server-guide/mc27.webp)
 
 **Timings：**
 
@@ -1349,8 +1349,8 @@ Paper 提供了一个/mspt命令，该命令将告诉你服务器计算最近的
 
 要获取服务器的时间，你需要先执行/timings on，然后稍等片刻后执行/timings paste命令并单击你提供的链接。如果你不知道这个链接的内容，请寻求专业人士帮助。
 
-![](/images/posts/mc-server-guide/mc28.png)
-![](/images/posts/mc-server-guide/mc29-1024x488.png)
+![](/images/posts/mc-server-guide/mc28.webp)
+![](/images/posts/mc-server-guide/mc29-1024x488.webp)
 
 **附2：性能测量名词：**
 
@@ -1450,7 +1450,7 @@ PlayerParticles插件可以让玩家创建自定义粒子特效组，那么我�
 
 生效后，普通玩家就无法使用PlayerParticles的功能，而位于“VIP”组的玩家才可以使用。当玩家拥有成为VIP的条件时，你可以灵活利用权限组的添加命令，将此玩家添加进“VIP”组内。
 
-![](/images/posts/mc-server-guide/mc30.png)
+![](/images/posts/mc-server-guide/mc30.webp)
 
 你也可以继续添加其它插件的权限，为VIP玩家提供一些额外的奖励和福利，以增强他们的游戏体验。这可以包括VIP专属的特殊装备、称号、头衔、颜色等。
 

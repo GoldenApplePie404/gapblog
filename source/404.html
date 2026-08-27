@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>404 · 页面走丢了</title>
+<style>
+  :root{--primary:#FF9700;--primary-deep:#C25E00;--bg:#FBF8F3;--ink:#241F19;--line:rgba(36,31,25,.10)}
+  *{box-sizing:border-box;margin:0;padding:0}
+  body{font-family:'LXGW WenKai','霞鹜文楷',-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;background:var(--bg);color:var(--ink);min-height:100vh;display:flex;align-items:center;justify-content:center;padding:24px;line-height:1.6}
+  .wrap{text-align:center;max-width:520px}
+  .icon{width:64px;height:64px;color:var(--primary);margin:0 auto 6px;display:block;opacity:.9}
+  .code{font-size:clamp(120px,22vw,200px);font-weight:bold;color:var(--primary);line-height:1;letter-spacing:-.02em;text-shadow:0 4px 24px rgba(255,151,0,.18);font-variant-numeric:tabular-nums}
+  h1{font-size:1.55rem;margin:6px 0 12px;color:var(--ink);font-weight:600}
+  p{color:#5a544a;margin-bottom:28px;font-size:1rem}
+  .btn{display:inline-flex;align-items:center;gap:6px;padding:12px 28px;background:var(--primary);color:#fff;text-decoration:none;border-radius:10px;font-size:1rem;font-weight:500;transition:transform .2s,box-shadow .2s;box-shadow:0 4px 14px rgba(255,151,0,.25)}
+  .btn:hover{transform:translateY(-2px);box-shadow:0 8px 22px rgba(255,151,0,.35)}
+  .btn:active{transform:translateY(0)}
+  .tip{font-size:.82rem;color:#9a9387;margin-top:36px}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <svg class="icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M16 16s-1.5-2-4-2-4 2-4 2"/><line x1="9" y1="9" x2="9.01" y2="9"/><line x1="15" y1="9" x2="15.01" y2="9"/></svg>
+  <div class="code">404</div>
+  <h1>页面走丢了</h1>
+  <p>你访问的链接可能已被移除或从未存在过。</p>
+  <a class="btn" href="/gapblog/">
+    <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"/></svg>
+    回到首页
+  </a>
+  <div class="tip">或者检查浏览器地址栏是否有拼写错误</div>
+</div>
+</body>
+</html>

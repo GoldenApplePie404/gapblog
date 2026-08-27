@@ -1,9 +1,9 @@
 ---
 title: "基于ESP32的Minecraft服务器状态查询摆件"
 img_dir: esp32-mc-status
-cover: /images/posts/esp32-mc-status/fm.png
+cover: /images/posts/esp32-mc-status/fm.webp
 date: 2024-12-01 17:01:21
-categories: ["开发板", "我的世界", "教程"]
+categories: [["开发板"], ["我的世界"], ["教程"]]
 tags: ["ESP32", "Micropython", "MineCraft", "开发板", "我的世界", "教程", "服务器"]
 ---
 为免去频繁查看 MC 服务器状态的繁琐，我用一块 ESP32 加 0.96 英寸 OLED 屏（SSD1306）做了个桌面状态摆件，约 20~25 元成本即可实时显示服务器离线状态与在线玩家数，本文附完整 MicroPython 代码。
@@ -15,7 +15,7 @@ tags: ["ESP32", "Micropython", "MineCraft", "开发板", "我的世界", "教程
 
 于是乎，我又拿起了我的ESP32鼓捣了起来。在折腾了半个星期后终于弄出来了第一个版本，下面是效果图：
 
-![](/images/posts/esp32-mc-status/espmc.png)
+![](/images/posts/esp32-mc-status/espmc.webp)
 
 如图所示（图片所示版本为该项目的第一个测试版本），你需要一块ESP32开发板，同时还需要一块0.96英寸的OLED屏幕，屏幕驱动为SSD1306，最后别忘记准备好杜邦线，成本总计在20~25元范围内。不过使用0.96英寸屏幕的弊端就是，屏幕空间太有限了，无法显示更多内容。于是在后续版本中，我添加了自动翻页的功能，这样就能在有限的空间内显示更多内容了。不过毕竟是0.96英寸的屏幕，即使加入了翻页功能在有些情况也会显得不尽人意。好了好了，废话不多说，接下来就是代码展示环节（编译环境选择MicroPython）：
 

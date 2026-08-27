@@ -30,3 +30,11 @@ _multiconfig.yml
 
 # ===== WorkBuddy 项目数据（含项目记忆，勿公开）=====
 .workbuddy/
+
+# ===== 其他 =====
+redesign-preview/
+.venv/
+tools/
+backup-assets/
+.wb-preview/
+overview.md

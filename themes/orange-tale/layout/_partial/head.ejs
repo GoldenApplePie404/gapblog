@@ -1,0 +1,10 @@
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title><%= page.title ? page.title + ' · ' + config.title : config.title %></title>
+<meta name="theme-color" content="#f97316">
+<%- open_graph() %>
+<link rel="icon" type="image/png" href="<%- url_for('images/site/icon.png') %>">
+<link rel="apple-touch-icon" href="<%- url_for('images/site/icon.png') %>">
+<!-- 字体与第三方库均已本地化（fonts/ + js/vendor/，无外部 CDN） -->
+<link rel="stylesheet" href="<%- url_for('css/fonts.css') %>?v=20260826o">
+<link rel="stylesheet" href="<%- url_for('css/style.css') %>?v=20260827h">

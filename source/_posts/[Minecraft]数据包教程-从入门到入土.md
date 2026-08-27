@@ -1,9 +1,9 @@
 ---
 title: "[Minecraft]数据包教程:从入门到入土"
 img_dir: mc-datapack-tutorial
-cover: /images/posts/mc-datapack-tutorial/fm.png
+cover: /images/posts/mc-datapack-tutorial/fm.webp
 date: 2024-06-01 21:36:22
-categories: ["我的世界", "教程"]
+categories: [["我的世界"], ["教程"]]
 tags: ["MineCraft", "我的世界", "教程", "数据包"]
 ---
 数据包是 Minecraft Java 版在不修改游戏代码的情况下自定义游戏内容的核心机制。本教程从认识数据包开始，带你逐步掌握函数、进度、战利品表、配方、结构、标签、维度等核心功能，从入门到入土。
@@ -65,7 +65,7 @@ tags: ["MineCraft", "我的世界", "教程", "数据包"]
 
 当你安装好Visual Studio Code后，为了后续写指令能够更方便，这里推荐下载2个扩展插件：Data-pack Helper Plus、language-mcfunction。
 
-![](/images/posts/mc-datapack-tutorial/p1.png)
+![](/images/posts/mc-datapack-tutorial/p1.webp)
 
 这俩个扩展插件的功能是为你的Visual Studio Code提供自动补全与校验，通过语法高亮、错误检查、自动补全等，让开发者更方便地编写和调试json和mcfunction文件。
 
@@ -73,7 +73,7 @@ tags: ["MineCraft", "我的世界", "教程", "数据包"]
 
 ### [2.数据包的结构](#dpstru)
 
-![](/images/posts/mc-datapack-tutorial/p2-178x1024.png)
+![](/images/posts/mc-datapack-tutorial/p2-178x1024.webp)
 
 一个完整的数据包结构如左图所示，需要注意的是，你的数据包并不需要像图片示的那样完整，你可以选择性的创建文件（夹）。
 
@@ -92,7 +92,7 @@ tags: ["MineCraft", "我的世界", "教程", "数据包"]
 
 pack\_format指示的是期望使用的MC版本，每个版本都对应一个数字，如1.18.2对应9、1.20.1对应15等。description指示的是数据包的说明文字，这一点要在游戏内体现。例如，我在这一项中填写“test\_Datapack”，那么在游戏内，当我利用指令列出数据包时，你可以把鼠标指针放在数据包名字上面，它就会显示这个名称。
 
-![](/images/posts/mc-datapack-tutorial/p3.png)
+![](/images/posts/mc-datapack-tutorial/p3.webp)
 
 **pack.png：**一个像素为64x64的图片，用于展示数据包的封面，可有可无。
 
@@ -641,7 +641,7 @@ function test:hong with storage test:data args
 
 那么上面的配方表示一个金苹果的有序合成配方，玩家需要在工作台内按照如下图的物品摆放顺序进行合成：
 
-![](/images/posts/mc-datapack-tutorial/garecipe1.png)
+![](/images/posts/mc-datapack-tutorial/garecipe1.webp)
 
 现在我们创建一个新的数据包，用来修改原版金苹果的合成配方。在这里我创建一个名为More\_Recipes的数据包进行演示。以下就是我修改后的新配方（路径：More\_Recipes\data\minecraft\recipes\golden\_apple.json）：
 
@@ -669,7 +669,7 @@ function test:hong with storage test:data args
 
 可以看到，我将原版金苹果的合成配方中的原材料——金锭替换成了金粒，而且由于命名空间的冲突，我的配方已经覆盖了原版的配方，一旦加载了这个数据包，你就可以在游戏中使用金粒进行合成金苹果，同时原先的配方已经失效。
 
-![](/images/posts/mc-datapack-tutorial/garecipe2.png)
+![](/images/posts/mc-datapack-tutorial/garecipe2.webp)
 
 上述例子中，我们介绍了工作台的有序合成配方的创建和修改，这仅是配方系统中的冰山一角。其实在我的世界中，配方有很多类型，如工作台配方、烹饪和烧炼类配方、锻造台配方等，每一种类型的配方都可以进行自定义，这极大的丰富了玩家在我的世界的游玩体验。在这里我会提供一个自创的配方数据包，读者可以自行下载学习研究，当然也可以随意魔改和使用：[More\_Recipe](/images/posts/mc-datapack-tutorial/More_Recipes.zip)
 
@@ -898,7 +898,7 @@ execute as @p run scoreboard players operation X pos = @s x
 
 **需要的指令：**[**scoreboard**](https://zh.minecraft.wiki/w/%E5%91%BD%E4%BB%A4/scoreboard?variant=zh-cn)、[**execute**](https://zh.minecraft.wiki/w/%E5%91%BD%E4%BB%A4/execute?variant=zh-cn)、[**tellraw**](https://zh.minecraft.wiki/w/%E5%91%BD%E4%BB%A4/tellraw?variant=zh-cn)、[**title**](https://zh.minecraft.wiki/w/%E5%91%BD%E4%BB%A4/title)**等**
 
-![](/images/posts/mc-datapack-tutorial/cmb.png)
+![](/images/posts/mc-datapack-tutorial/cmb.webp)
 
 在写这个数据包之前，我们先尝试利用命令方块实现这个功能。首先介绍一下MC中命令方块的种类及其功能，这样好接下来的教程。先看左图：在MC中，共有三种类型的命令方块：脉冲型（橙色）、连锁型（青色）、循环型（紫色）。而每一种类型的命令方块又可以设置成两种制约模式：不受制约（图片上排三个）、条件制约（图片下排三个），以及两种运行模式：红石控制、保持开启。每一种类型的不同模式可以通过右击命令方块后打开的编辑界面进行调整。
 
@@ -924,7 +924,7 @@ execute as @p run scoreboard players operation X pos = @s x
 
 **模块一：**
 
-![](/images/posts/mc-datapack-tutorial/cmb2.png)
+![](/images/posts/mc-datapack-tutorial/cmb2.webp)
 
 类型：脉冲/不受制约/红石控制（下面一个）、连锁/不受制约/保持开启（上面四个）  
 指令(从上往下)：  
@@ -938,7 +938,7 @@ scoreboard objectives add Timer dummy
 
 **模块二：**
 
-![](/images/posts/mc-datapack-tutorial/cmb1.png)
+![](/images/posts/mc-datapack-tutorial/cmb1.webp)
 
 类型：循环/不受制约/红石控制（下面一个）、连锁/不受制约/保持开启（上面三个）  
 指令(从上往下)：  
@@ -1037,7 +1037,7 @@ give @p minecraft:bow{display:{Name:"[{\"text\":\"闪电霹雳弓\",\"color\":\"
 
 假设你要添加一个法阵的粒子图案，我们先可以在这个网站中下载你喜欢的图案：https://ciaccodavi.de/qbdp/acg/，然后将其导入Particle-Converter，设置好后导出mcfunction文件即可。
 
-![](/images/posts/mc-datapack-tutorial/tool.png)
+![](/images/posts/mc-datapack-tutorial/tool.webp)
 
 最后，为了避免游戏卡顿，我们需要利用kill指令来清除落地的箭矢，这是为了防止指令循环执行导致的性能问题。毕竟，持续地召唤闪电、苦力怕（或TNT）以及产生粒子效果都会给游戏带来不必要的负担，影响游戏体验。
 
@@ -1080,7 +1080,7 @@ summon minecraft:creeper ~ ~ ~ {Fuse:0,ExplosionRadius:5}
 
 对于上面的那个目标选择器，你可以先将弓切换到副手，然后利用*/data get entity @p*指令查询你的数据，执行后在聊天栏你可以看到一大串的内容，找到如下图所示的内容：
 
-![](/images/posts/mc-datapack-tutorial/nbt.png)
+![](/images/posts/mc-datapack-tutorial/nbt.webp)
 
 Slot代表的是槽位，-106b表示副手的槽位，后面就是该槽位上的物品以及其自带的一些标签数据。你可以选择性的添加至目标选择器（在上面的指令中我只添加了这把弓的标签部分），这样就不会与普通的弓弄混了。
 
@@ -1281,13 +1281,13 @@ clear @p minecraft:tripwire_hook{"display":{"Name":"{\"text\":\"key\"}"}}
 
 首先，你必须要准备好场地，比如下面这个简单的跑酷场地：
 
-![](/images/posts/mc-datapack-tutorial/pk1-1024x493.png)
+![](/images/posts/mc-datapack-tutorial/pk1-1024x493.webp)
 
 接下来，你需要获取一个[结构方块](https://zh.minecraft.wiki/w/%E7%BB%93%E6%9E%84%E6%96%B9%E5%9D%97)来保存这一部分建筑（具体教程请自行查阅）。结构方块的功能是保存和加载游戏结构。同时，它可以被红石激活（加载模式下的结构方块被红石信号激活后会直接生成相应的结构）。
 
 所以整个跑酷挑战的大致原理是：当玩家开始游戏后（比如点击某一个开启按钮），玩家会被自动传送至跑酷的出生地处，同时计时器（倒计时）开始计时。当玩家在规定时间内到达了终点（我们可以在终点放一个压力板，当玩家踩住时就说明玩家到达终点了），玩家会被自动传送出跑酷场地，并在其身边生成一个奖励箱（可以利用前面的教程），否则，玩家传送出场地后无奖励箱生成。同时，为了挑战方便，我们可以设置一个“临时重生点”，当玩家掉下时，会把玩家自动传送回跑酷起点。
 
-![](/images/posts/mc-datapack-tutorial/pk2.png)
+![](/images/posts/mc-datapack-tutorial/pk2.webp)
 
 首先你可以像左图那样建一个跑酷挑战的“标志”，点击下面的按钮可以开启挑战。不过本着不出现红石的原则（越简单越好），这是一个“伪按钮”，它的附近并没有任何用于执行指令的命令方块，但是当它被按下时，依然可以执行指令。
 
@@ -1657,7 +1657,7 @@ A\*算法基于一个启发式函数，该函数为每个节点提供一个“�
 
 你可以直接下载这个数据包然后慢慢研究，但需要注意的是，这个数据包内的寻路算法并不支持Y轴方向上的搜寻，因此，你得确保设置的起始点和终点必须在X-Z平面内。还有一件事，为了放置生成过多的盔甲架，造成卡顿，你需要将最大步长设置在合理的范围内。
 
-![](/images/posts/mc-datapack-tutorial/astar-1024x654.png)
+![](/images/posts/mc-datapack-tutorial/astar-1024x654.webp)
 
 但是，在MC利用指令实现寻路算法有时会不尽人意，就拿这个数据包来说，虽然它已经提供了一个很好的算法框架，但是也存在一些缺点。比如，由于这个数据包是利用盔甲架来充当工具寻路的，假设你的目标点离得远，它会召唤一大堆盔甲架造成卡顿；还有，哪怕路径上存在一些红石、梯子、门之类的非方块的东西，它也会阻挡路径的搜索，这样很可能会错开最佳路线。
 

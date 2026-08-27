@@ -34,7 +34,7 @@ cmd /c "hexo new 文章标题"
 
 ### 2. 编辑文章
 
-用任意编辑器（VS Code / Typora 等）打开 `source/_posts/` 下的 md 文件编辑，**保存后浏览器刷新即可看到**（服务器会自动重新生成）。
+用任意编辑器（VS Code等）打开 `source/_posts/` 下的 md 文件编辑，**保存后浏览器刷新即可看到**（服务器会自动重新生成）。
 
 ### 3. 文章 front-matter 模板
 
@@ -43,7 +43,7 @@ cmd /c "hexo new 文章标题"
 title: 文章标题
 date: 2026-01-01 00:00:00
 tags: [标签1, 标签2]
-categories: [分类名]
+categories: [["分类1"],["分类2"]]   # 单分类写 [分类名]；多分类用数组套数组（平级），勿写 ["a","b"]（那是父子嵌套）
 img_dir: my-post            # 本文图片目录（纯英文小写）
 cover: /images/posts/my-post/cover.jpg   # 首页卡片封面
 banner: /images/posts/my-post/banner.jpg # 文章页顶部大图（可选）
@@ -95,6 +95,8 @@ sticky: true                # 置顶
   cmd /c "hexo clean && hexo generate"
   ```
 
+  > ⚠️ Windows 下 `hexo clean` 偶发卡死/文件锁定（db.json 无法删除），若遇到可直接用 `rm -f db.json && hexo generate`（跳过 clean）。
+
 ***
 
 ## ⚙️ 三、站点配置
@@ -102,9 +104,9 @@ sticky: true                # 置顶
 ### 根配置 `_config.yml`
 
 - `title` / `author` / `url` / `description`：站点基本信息
-- `theme: anime-business`：主题
+- `theme: orange-tale`：主题
 
-### 主题配置 `themes/anime-business/_config.yml`
+### 主题配置 `themes/orange-tale/_config.yml`
 
 - `greeting`：首页欢迎语（当前 Hero 为打字机标题，来自 `config.title`）
 - `menu`：导航菜单
@@ -140,8 +142,8 @@ hexo clean && hexo generate
 
 ## 🧩 五、主题功能层（开发者）
 
-JS 功能模块在 `themes/anime-business/source/js/modules/`：
-`nav / reading-bar / back-top / copy-code / masonry / reveal / math / mermaid / typewriter`
+JS 功能模块在 `themes/orange-tale/source/js/modules/`：
+`nav / reading-bar / back-top / copy-code / code-fold / reveal / math / mermaid / typewriter / search / page-transition / music / toc / lightbox / loader`
 
 模块契约：`export default { name, init(ctx) }`，在 `features` 中可独立开关。
 样式层与功能层通过 `data-*` 钩子 / CSS 变量解耦，加新功能不碰样式。
@@ -158,7 +160,7 @@ JS 功能模块在 `themes/anime-business/source/js/modules/`：
 | 模板引擎      | EJS（`hexo-renderer-ejs`） |
 | 样式        | Stylus（`hexo-renderer-stylus`） |
 | Markdown    | marked（`hexo-renderer-marked`）+ highlight.js 高亮 |
-| 公式 / 图表   | KaTeX、Mermaid（CDN 渲染，服务端预处理保护） |
+| 公式 / 图表   | KaTeX 0.16.11、Mermaid 10.9.1 |
 | 站内搜索      | 自建 `search.json` 全文索引（零第三方服务） |
 | 启动脚本      | `start.bat`（Windows）/ `start.sh`（Git Bash） |
 
@@ -173,7 +175,7 @@ gapblog/
 │   ├── _posts/                 # 文章（markdown）
 │   ├── about/ categories/ tags/...   # 独立页面
 │   └── images/                 # 图片库（site/ posts/ charts/ misc/）
-├── themes/anime-business/      # 自定义主题
+├── themes/orange-tale/      # 自定义主题
 │   ├── _config.yml             # 主题配置（菜单/社交/features 开关）
 │   ├── layout/                 # 模板层：页面 + _partial 组件（EJS）
 │   ├── scripts/                # 服务端脚本：过滤器/生成器/标签
@@ -219,13 +221,18 @@ public/ 静态文件 → 上传服务器即上线
 | reading-bar   | `modules/reading-bar.js`                  | 阅读进度条      | `features.reading_bar` |
 | back-top      | `modules/back-top.js`                     | 回到顶部       | `features.back_top` |
 | copy-code     | `modules/copy-code.js`                    | 代码块复制      | `features.copy_code` |
-| masonry       | `modules/masonry.js`                      | 瀑布流高度均衡    | `features.masonry`  |
+| code-fold     | `modules/code-fold.js`                    | 长代码块折叠（>15 行收起） | `features.code_fold`（数字=阈值） |
+| masonry       | `modules/masonry.js`                      | 瀑布流高度均衡（**已停用**：首页改双列逐行） | `features.masonry` |
 | reveal        | `modules/reveal.js`                       | 滚动显现动画     | `features.reveal`   |
-| math          | `modules/math.js` + `scripts/math-mermaid.js` | KaTeX 公式渲染 | `features.math`     |
-| mermaid       | `modules/mermaid.js` + `scripts/math-mermaid.js` | Mermaid 图表 | `features.mermaid`  |
+| math          | `modules/math.js` + `scripts/math-mermaid.js` | KaTeX 公式渲染（本地化） | `features.math`     |
+| mermaid       | `modules/mermaid.js` + `scripts/math-mermaid.js` | Mermaid 图表（本地化；主题色/缩放/平移/下载 SVG·PNG/复制代码） | `features.mermaid`  |
 | typewriter    | `modules/typewriter.js`                   | 首页标题打字机    | `features.typewriter` |
-| search        | `modules/search.js` + `scripts/search.js` | 站内搜索       | `features.search`   |
-| page-transition | `modules/page-transition.js`            | 页面过渡动画     | 常驻                 |
+| search        | `modules/search.js` + `scripts/search.js` | 站内搜索（本地 search.json） | `features.search`   |
+| page-transition | `modules/page-transition.js`            | 页面过渡动画 + 加载遮罩 | 常驻                 |
+| music         | `modules/music.js`                        | 音乐播放器（本地歌单 playlist.json） | 常驻（features.music） |
+| toc           | `modules/toc.js`                          | 文章目录（博主卡翻面） | 常驻                 |
+| lightbox      | `modules/lightbox.js`                     | 文章图片灯箱（缩放/平移/切换） | `features.lightbox` |
+| loader        | `modules/loader.js`                       | 脚本加载器（math/mermaid 用） | 常驻                 |
 | postimg       | `scripts/tags.js`                         | 文章配图标签     | 常驻                 |
 
-> 模块契约：`export default { name, init(ctx) }`；开关在 `themes/anime-business/_config.yml` 的 `features.*` 中，设为 `false` 即不加载对应 JS。
+> 模块契约：`export default { name, init(ctx) }`；开关在 `themes/orange-tale/_config.yml` 的 `features.*` 中，设为 `false` 即不加载对应 JS。

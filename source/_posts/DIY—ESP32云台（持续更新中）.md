@@ -1,7 +1,7 @@
 ---
 title: "DIY—ESP32云台（持续更新中）"
 img_dir: esp32-gimbal
-cover: /images/posts/esp32-gimbal/fm.jpg
+cover: /images/posts/esp32-gimbal/fm.webp
 date: 2025-11-16 23:16:00
 categories: ["开发板"]
 ---
@@ -16,13 +16,13 @@ categories: ["开发板"]
 
 于是，我投入到步进电机驱动电路原理的研究中。经过一番探索，我发现驱动电路的核心组件是ULN2003这个集成电路。ULN2003属于高耐压、大电流复合晶体管阵列，它由七个硅NPN复合晶体管巧妙组合而成。
 
-![](/images/posts/esp32-gimbal/yuntai_diy-1024x466.jpg)
+![](/images/posts/esp32-gimbal/yuntai_diy-1024x466.webp)
 
 *深夜研究*
 
 从功能层面来讲，ULN2003本质上就是一个电流放大器，其主要作用是增强电路的驱动能力。以常见的单片机为例，其输出引脚输出的电流通常只有几毫安（mA），这样的电流强度远远不足以驱动电机、继电器或者电磁阀等设备。就拿直流电机来说，要使其正常运转，往往需要至少500mA的电流。而ULN2003的出现很好地解决了这个问题，它能够对单片机输出引脚的微弱信号进行放大处理。经过ULN2003放大之后，我们就可以通过单片机的输出引脚直接控制这些原本难以驱动的设备，极大地简化了电路设计和控制流程。
 
-![](/images/posts/esp32-gimbal/image.png)
+![](/images/posts/esp32-gimbal/image.webp)
 
 如图，1~7引脚用于信号输入，8引脚为接地，9为二极管负极公共端，10~16为大电流输出。一个28BYJ48型号的步进电机有5个端口，其中4个为信号接收端（准确来说是用于步进电机线圈的驱动端口）。步进电机的工作原理是通过依次给不同的线圈通电，从而产生旋转磁场，驱动电机转子转动。这4个信号接收端就像是电机的“控制开关”，通过接收来自ULN2003芯片输出的电流信号，精确地控制各个线圈的通断和通电顺序，进而实现对步进电机转动方向、速度和角度的精准控制。而剩下的1个端口通常是公共端，它与电机内部的线圈公共连接点相连，为整个线圈电路提供一个共同的电位参考。
 
@@ -30,19 +30,19 @@ categories: ["开发板"]
 
 其实ULN2803与ULN2003原理一样，只不过多了几个阵列罢了。于是参考原先的驱动电路，我绘制了一个新的电路图
 
-![](/images/posts/esp32-gimbal/image-1.png)
+![](/images/posts/esp32-gimbal/image-1.webp)
 
 你或许已经留意到，我在设计中特意增设了LED指示灯（电源引脚与输出引脚均配备），以实现直观的状态显示。不过，为了进一步确保电路的可靠性与安全性，我还特别预留了R10位置的测试断点，以便在电源指示电路突发异常时，能够迅速进行故障排查与修复。接下来把PCB绘制完成即可。
 
-![](/images/posts/esp32-gimbal/yuntaipcb-958x1024.png)
+![](/images/posts/esp32-gimbal/yuntaipcb-958x1024.webp)
 
 到货后进行焊接、测试。
 
-![](/images/posts/esp32-gimbal/yuntai_pcb3-1024x466.jpg)
+![](/images/posts/esp32-gimbal/yuntai_pcb3-1024x466.webp)
 
 *左：1.0 | 右：2.0*
 
-![](/images/posts/esp32-gimbal/yuntai_test-1024x466.jpg)
+![](/images/posts/esp32-gimbal/yuntai_test-1024x466.webp)
 
 焊接测试后发现，电源指示灯即便打开开关也不亮，可能由电压异常或焊接失误导致（尚未排查）。不过奇妙的是，这一状况并未影响电路板整体功能的正常运行。
 

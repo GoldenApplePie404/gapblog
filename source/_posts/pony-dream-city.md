@@ -1,7 +1,7 @@
 ---
 title: "小马梦幻城 | Pony Dream City"
 img_dir: pony-dream-city
-cover: /images/posts/pony-dream-city/fm.png
+cover: /images/posts/pony-dream-city/fm.webp
 date: 2022-12-22 21:04:12
 categories: ["小马梦幻城"]
 tags: ["小马梦幻城", "服务器"]
@@ -15,7 +15,7 @@ tags: ["小马梦幻城", "服务器"]
 
 ~~小马梦幻城服务器英文名Pony Dream City(简写：PDC)。理论上全版本适应，经过测试，最适版本为1.12.2-1.18.2。你也可以自行安装小马MOD、小马系列材质包或者光影来增强游戏体验（视设备情况而定）。~~
 
-![](/images/posts/pony-dream-city/logo.png)
+![](/images/posts/pony-dream-city/logo.webp)
 
 *服务器LOGO--设计：ViolentStorm*
 
