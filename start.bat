@@ -3,7 +3,7 @@ title Anime Business Blog - Launcher
 cd /d "%~dp0"
 
 echo ============================================
-echo    Golden Apple Pie Blog  -  Launcher
+echo    GoldenApplePie Blog  -  Launcher
 echo ============================================
 echo.
 

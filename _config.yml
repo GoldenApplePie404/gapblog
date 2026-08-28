@@ -1,8 +1,8 @@
-# Hexo Configuration
-## Docs: https://hexo.io/docs/configuration.html
-## Source: https://github.com/hexojs/hexo/
+# Hexo 配置文件
+## 官方文档: https://hexo.io/docs/configuration.html
+## 源码仓库: https://github.com/hexojs/hexo/
 
-# Site
+# 站点基础设置
 title: 金苹果派の博客
 subtitle: ''
 description: ''
@@ -11,33 +11,33 @@ author: 金苹果派 (GoldenApplePie)
 language: zh-CN
 timezone: ''
 
-# URL
-## Set your site url here. For example, if you use GitHub Page, set url as 'https://username.github.io/project'
+# 网站 URL 配置
+## 在这里填写你的站点地址。例如使用 GitHub Pages，则填写：'https://username.github.io/project'
 url: https://goldenapplepie404.github.io/gapblog
 root: /gapblog/
 permalink: :year/:month/:day/:title/
 permalink_defaults:
 pretty_urls:
-  trailing_index: true # Set to false to remove trailing 'index.html' from permalinks
-  trailing_html: true # Set to false to remove trailing '.html' from permalinks
+  trailing_index: true # 设置为 false 可以移除链接末尾的 index.html
+  trailing_html: true # 设置为 false 可以移除链接末尾的 .html
 
-# Directory
-source_dir: source
-public_dir: public
-tag_dir: tags
-archive_dir: archives
-category_dir: categories
+# 目录配置
+source_dir: source      # 源文件目录
+public_dir: public      # 生成静态文件的输出目录
+tag_dir: tags           # 标签页面目录
+archive_dir: archives   # 归档页面目录
+category_dir: categories # 分类页面目录
 code_dir: downloads/code
 i18n_dir: :lang
 skip_render:
 
-# Writing
-new_post_name: :title.md # File name of new posts
-default_layout: post
-titlecase: false # Transform title into titlecase
+# 文章写作相关配置
+new_post_name: :title.md # 新建文章的文件名格式
+default_layout: post     # 默认文章布局模板
+titlecase: false         # 是否自动把文章标题转为首字母大写格式
 external_link:
-  enable: true # Open external links in new tab
-  field: site # Apply to the whole site
+  enable: true # 在新标签页打开外部链接
+  field: site  # 对整个站点生效
   exclude: ''
 filename_case: 0
 render_drafts: false
@@ -46,60 +46,59 @@ relative_link: false
 future: true
 syntax_highlighter: highlight.js
 highlight:
-  line_number: true
+  line_number: true   # 显示代码行号
   auto_detect: false
   tab_replace: ''
   wrap: true
   hljs: false
 prismjs:
   preprocess: true
-  line_number: true
+  line_number: true   # 显示代码行号
   tab_replace: ''
 
-# Home page setting
-# path: Root path for your blogs index page. (default = '')
-# per_page: Posts displayed per page. (0 = disable pagination)
-# order_by: Posts order. (Order by date descending by default)
+# 首页生成设置
+# path: 博客首页的根路径 (默认为空)
+# per_page: 首页每页展示文章数量 (0 = 关闭分页)
+# order_by: 文章排序方式 (默认按日期降序排列)
 index_generator:
   path: ''
   per_page: 10
   order_by: -date
 
-# Category & Tag
+# 分类与标签
 default_category: uncategorized
 category_map:
 tag_map:
 
-# Metadata elements
+# HTML meta 元标签
 ## https://developer.mozilla.org/en-US/docs/Web/HTML/Element/meta
-meta_generator: false
+meta_generator: false # 关闭 Hexo 版本标记 meta 标签
 
-# Date / Time format
-## Hexo uses Moment.js to parse and display date
-## You can customize the date format as defined in
-## http://momentjs.com/docs/#/displaying/format/
+# 日期、时间格式
+## Hexo 使用 Moment.js 解析时间
+## 格式写法参考官方文档：http://momentjs.com/docs/#/displaying/format/
 date_format: YYYY-MM-DD
 time_format: HH:mm:ss
-## updated_option supports 'mtime', 'date', 'empty'
+## updated_option 可选值: 'mtime' 文件修改时间, 'date'文章发布时间, 'empty'不输出更新时间
 updated_option: 'mtime'
 
-# Pagination
-## Set per_page to 0 to disable pagination
+# 分页设置
+## 将 per_page 设置为 0 即可关闭分页
 per_page: 10
 pagination_dir: page
 
-# Include / Exclude file(s)
-## include:/exclude: options only apply to the 'source/' folder
+# 文件包含 / 排除设置
+## include / exclude / ignore 仅作用于 source/ 文件夹
 include:
 exclude:
 ignore:
 
-# Extensions
-## Plugins: https://hexo.io/plugins/
-## Themes: https://hexo.io/themes/
+# 扩展功能
+## 插件市场: https://hexo.io/plugins/
+## 主题市场: https://hexo.io/themes/
 theme: orange-tale
 
-# Deployment
-## Docs: https://hexo.io/docs/one-command-deployment
+# 部署发布配置
+## 部署文档: https://hexo.io/docs/one-command-deployment
 deploy:
   type: ''

@@ -8,6 +8,7 @@
 #   posts/  文章配图：建议 posts/<文章文件名>/xxx.jpg，封面/横幅也放这里
 #   charts/ 图表图：数据图表、架构图、示意图
 #   misc/   其他杂项图片
+
 # ---- 引用方式 ----
 # 全站背景图（可选）：留空则使用默认橙黄渐变背景
 background: ''
@@ -20,7 +21,7 @@ banner: /images/site/gap-bg.webp
 # 正文插图/图表：直接写 ![](/images/charts/xxx.png)
 
 # 首页欢迎语
-greeting: 你好呀，欢迎光临
+greeting: 你好呀，欢迎光临金苹果派的小破站~
 
 # 导航菜单（键 = 显示文字，值 = 链接）
 menu:

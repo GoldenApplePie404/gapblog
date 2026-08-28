@@ -236,3 +236,4 @@ public/ 静态文件 → 上传服务器即上线
 | postimg       | `scripts/tags.js`                         | 文章配图标签     | 常驻                 |
 
 > 模块契约：`export default { name, init(ctx) }`；开关在 `themes/orange-tale/_config.yml` 的 `features.*` 中，设为 `false` 即不加载对应 JS。
+
