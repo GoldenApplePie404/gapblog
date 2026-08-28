@@ -268,9 +268,10 @@ ESP32由ESP32-P 系列、ESP32-S 系列、ESP32-C 系列、ESP32-H 系列、ESP3
 ![](/images/posts/esp32-notes/esp32wroom32-1024x347.webp)
 下面的表格就汇总了各个系列的主要参数：
 
-|  |  |  |  |  |  |  |  |  |  |  |
-| --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- |
+
+
 | ESP32系列 | ESP32芯片 | 芯片核数 | WIFI | 蓝牙 | 单核时钟 | 封装 | 引脚数量 | RAM/ROM | FLASH(MB) | PSRAM |
+| --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- |
 | ESP32-P4 | ESP32-P4NRW16 | 双/单 | - | - |  | QFN10X10 | 104引脚 | 128 KB HP ROM，16 KB LP ROM，768 KB HP L2MEM，32 KB LP SRAM，8 KB TCM | N/A | 16 |
 | ESP32-P4NRW32 | 双/单 | - | - |  | QFN10X10 | 104引脚 | 128 KB HP ROM，16 KB LP ROM，768 KB HP L2MEM，32 KB LP SRAM，8 KB TCM | N/A | 32 |
 | ESP32-S3系列 | ESP32-S3 | 双 | √ | √ | 240 | QFN7X7 | 56引脚 | 32 KB ROM，512 KB SRAM, 16 KB RTC SRAM | N/A | N/A |

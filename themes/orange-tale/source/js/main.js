@@ -19,11 +19,13 @@ import pageTransition from './modules/page-transition.js';
 import music from './modules/music.js';
 import toc from './modules/toc.js';
 import lightbox from './modules/lightbox.js';
+import bgDeco from './modules/bg-deco.js';
+import tables from './modules/tables.js';
 
 var features = (window.__AB__ && window.__AB__.features) || {};
 var ctx = { features: features, root: document };
 
-var modules = [nav, readingBar, backTop, copyCode, codeFold, masonry, reveal, math, mermaid, typewriter, search, pageTransition, music, toc, lightbox];
+var modules = [nav, readingBar, backTop, copyCode, codeFold, masonry, reveal, math, mermaid, typewriter, search, pageTransition, music, toc, lightbox, bgDeco, tables];
 
 modules.forEach(function (mod) {
   if (features[mod.name] === false) return;

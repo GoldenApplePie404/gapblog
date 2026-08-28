@@ -35,8 +35,107 @@ function MusicPlayer(root, floatBtn, list, base) {
     time: q('[data-mp-time]'),
     mode: q('[data-mp-mode]'),
     volume: q('[data-mp-volume]'),
-    collapse: q('[data-mp-collapse]')
+    collapse: q('[data-mp-collapse]'),
+    spectrum: q('[data-mp-spectrum]')
   };
+
+  // --- 实时频谱图（Web Audio 分析器，作为播放条的半透明背景）---
+  var specCtx = els.spectrum ? els.spectrum.getContext && els.spectrum.getContext('2d') : null;
+  var audioCtx = null, analyser = null, mediaSrc = null, dataArr = null, rafId = null;
+
+  function sizeSpectrum() {
+    if (!specCtx || !els.spectrum) return;
+    var dpr = window.devicePixelRatio || 1;
+    var w = els.spectrum.clientWidth, h = els.spectrum.clientHeight;
+    if (!w || !h) return;
+    els.spectrum.width = w * dpr;
+    els.spectrum.height = h * dpr;
+    specCtx.setTransform(dpr, 0, 0, dpr, 0, 0);
+  }
+
+  function setupGraph() {
+    if (analyser) return;
+    try {
+      var AC = window.AudioContext || window.webkitAudioContext;
+      if (!AC) return;
+      audioCtx = new AC();
+      analyser = audioCtx.createAnalyser();
+      analyser.fftSize = 4096; // 提高频点分辨率，低频活跃区更丰富，支撑更密集的柱
+      analyser.smoothingTimeConstant = 0.8;
+      var viaCapture = typeof audio.captureStream === 'function';
+      if (viaCapture) {
+        // captureStream 不接管元素输出：元素照常发声，仅复制一份喂给分析器取频谱。
+        // 切勿再连 destination，否则同一信号双路（元素直出 + 图中副本）近同步叠加，产生梳状滤波，听感像回音。
+        mediaSrc = audioCtx.createMediaStreamSource(audio.captureStream());
+      } else {
+        // 兜底（旧浏览器）：MediaElementSource 已接管元素输出，必须接回 destination 才有声
+        mediaSrc = audioCtx.createMediaElementSource(audio);
+      }
+      mediaSrc.connect(analyser);
+      if (!viaCapture) analyser.connect(audioCtx.destination);
+      dataArr = new Uint8Array(analyser.frequencyBinCount);
+    } catch (e) { analyser = null; }
+  }
+  // 切歌后旧 captureStream/MediaElementSource 绑定已失效，销毁待下次 play 重建
+  function teardownGraph() {
+    stopSpectrum();
+    try {
+      if (mediaSrc) mediaSrc.disconnect();
+      if (analyser) analyser.disconnect();
+      if (audioCtx && audioCtx.close) audioCtx.close();
+    } catch (e) { /* ignore */ }
+    mediaSrc = null; analyser = null; audioCtx = null; dataArr = null;
+  }
+  function resumeGraph() {
+    try { if (audioCtx && audioCtx.state === 'suspended') audioCtx.resume(); } catch (e) {}
+  }
+  function ensureAnalyser() {
+    setupGraph();
+    resumeGraph();
+    return analyser;
+  }
+
+  function drawSpectrum() {
+    if (!specCtx || !els.spectrum) return;
+    rafId = requestAnimationFrame(drawSpectrum);
+    var w = els.spectrum.clientWidth, h = els.spectrum.clientHeight;
+    specCtx.clearRect(0, 0, w, h);
+    if (!analyser || !dataArr) return;
+    analyser.getByteFrequencyData(dataArr);
+    // 只取更靠近底部的低频强能量区（约 1/4 频段），右端更不出现平底空白
+    var usable = Math.floor(dataArr.length / 4);
+    var BARS = 320;
+    var gap = 1, minH = 2, maxH = h - 8;
+    specCtx.fillStyle = 'rgba(249, 115, 22, 0.22)';
+    var inner = w - gap * (BARS - 1); // 去掉柱间空隙后分给柱的总宽
+    var bw = inner / BARS;            // 允许小数，按比例平铺铺满整宽
+    var step = Math.max(1, Math.floor(usable / BARS));
+    var px = 0;
+    for (var i = 0; i < BARS; i++) {
+      var x0 = Math.round(px);
+      var x1 = Math.round(px + bw);
+      px += bw + gap;
+      var idx = Math.min(usable - 1, i * step);
+      var v = dataArr[idx] / 255;
+      var bh = minH + v * (maxH - minH);
+      specCtx.fillRect(x0, h - bh, Math.max(1, x1 - x0), bh);
+    }
+  }
+
+  function startSpectrum() {
+    if (!specCtx || !els.spectrum) return;
+    ensureAnalyser();
+    sizeSpectrum();
+    els.spectrum.classList.add('active');
+    if (!rafId) rafId = requestAnimationFrame(drawSpectrum);
+  }
+  function stopSpectrum() {
+    if (rafId) { cancelAnimationFrame(rafId); rafId = null; }
+    if (els.spectrum) {
+      els.spectrum.classList.remove('active');
+      if (specCtx) specCtx.clearRect(0, 0, els.spectrum.clientWidth, els.spectrum.clientHeight);
+    }
+  }
 
   var MODES = ['order', 'loop', 'random'];
   var state = {
@@ -49,15 +148,21 @@ function MusicPlayer(root, floatBtn, list, base) {
   var savedVol = parseFloat(localStorage.getItem('gap-music-volume'));
   if (!isNaN(savedVol)) state.volume = Math.min(1, Math.max(0, savedVol));
 
+  var pendingAuto = false;
   function load(i, auto) {
     state.index = (i + list.length) % list.length;
     var item = list[state.index];
-    audio.src = base + 'music/' + item.src;
+    var src = base + 'music/' + item.src;
+    knownDuration = 0;
+    els.progress.max = 0;
+    els.time.textContent = '0:00 / 0:00';
     els.title.textContent = item.title || '未知歌曲';
     els.artist.textContent = item.artist || '';
     if (item.cover) els.cover.style.backgroundImage = 'url(' + base + 'music/' + item.cover + ')';
     else els.cover.style.backgroundImage = '';
-    if (auto !== false) play();
+    pendingAuto = (auto !== false);
+    // 串行：先探针读真实时长，再由探针回调给主元素赋同一 URL（不并发，避免同 URL 被 abort）
+    probeEl.src = src;
   }
 
   function play() {
@@ -66,6 +171,9 @@ function MusicPlayer(root, floatBtn, list, base) {
       root.classList.add('playing');
       floatBtn.classList.add('playing');
       updateToggle();
+      // 播放真正开始后再建频谱图：captureStream 需要音频实际播放才有数据
+      ensureAnalyser();
+      startSpectrum();
     }).catch(function () { /* 自动播放被拦截等，保持暂停态 */ });
   }
 
@@ -75,6 +183,7 @@ function MusicPlayer(root, floatBtn, list, base) {
     root.classList.remove('playing');
     floatBtn.classList.remove('playing');
     updateToggle();
+    stopSpectrum();
   }
 
   function toggle() { state.playing ? pause() : play(); }
@@ -90,6 +199,46 @@ function MusicPlayer(root, floatBtn, list, base) {
     var m = Math.floor(s / 60), sec = Math.floor(s % 60);
     return m + ':' + (sec < 10 ? '0' : '') + sec;
   }
+
+  // --- 时长解析：MediaElementSource 捕获后 audio.duration 可能为 Infinity，需回归真实值 ---
+  var knownDuration = 0;
+  function getDuration() {
+    var d = audio.duration;
+    if (isFinite(d) && d > 0) return d;
+    // 兜底 1：用已缓冲的 seekable 区间末尾作为真实时长（无额外请求，不会触发 abort）
+    if (audio.seekable && audio.seekable.length && isFinite(audio.seekable.end(audio.seekable.length - 1))) {
+      var s = audio.seekable.end(audio.seekable.length - 1);
+      if (s > 0) return s;
+    }
+    // 兜底 2：无时长元数据的音频（duration=null 的流/mp3），用 buffered 末端（播放中随缓冲增长）
+    if (audio.buffered && audio.buffered.length && isFinite(audio.buffered.end(audio.buffered.length - 1))) {
+      var b = audio.buffered.end(audio.buffered.length - 1);
+      if (b > 0) return b;
+    }
+    return knownDuration;
+  }
+  function setDuration(d) {
+    if (!(isFinite(d) && d > 0)) return;
+    knownDuration = d;
+    els.progress.max = d;
+    els.time.textContent = fmt(audio.currentTime) + ' / ' + fmt(d);
+  }
+  // 探针元素：先读真实时长，再由探针回调给主元素赋同一 URL（串行请求，避免并发同 URL 被 abort）
+  var probeEl = new Audio();
+  probeEl.preload = 'metadata';
+  probeEl.muted = true;
+  probeEl.addEventListener('loadedmetadata', function () {
+    var d = probeEl.duration;
+    if (isFinite(d) && d > 0) setDuration(d);
+    var cur = probeEl.src;
+    if (cur && audio.src !== cur) { audio.src = cur; teardownGraph(); }
+    if (pendingAuto) { pendingAuto = false; play(); }
+  });
+  probeEl.addEventListener('error', function () {
+    var cur = probeEl.src;
+    if (cur) { audio.src = cur; teardownGraph(); }
+    if (pendingAuto) { pendingAuto = false; play(); }
+  });
 
   function updateToggle() {
     els.toggle.innerHTML = state.playing
@@ -143,18 +292,29 @@ function MusicPlayer(root, floatBtn, list, base) {
   });
 
   els.progress.addEventListener('input', function () {
-    if (audio.duration) audio.currentTime = els.progress.value;
+    var d = getDuration();
+    if (d > 0) audio.currentTime = els.progress.value;
   });
 
   audio.addEventListener('timeupdate', function () {
-    if (!audio.duration) return;
-    els.progress.max = audio.duration;
+    var d = getDuration();
+    if (!(d > 0)) return;
+    els.progress.max = d;
     els.progress.value = audio.currentTime;
-    els.time.textContent = fmt(audio.currentTime) + ' / ' + fmt(audio.duration);
+    els.time.textContent = fmt(audio.currentTime) + ' / ' + fmt(d);
   });
 
   audio.addEventListener('loadedmetadata', function () {
-    els.progress.max = audio.duration;
+    var d = getDuration();
+    if (d > 0) setDuration(d);
+  });
+
+  audio.addEventListener('durationchange', function () {
+    var d = getDuration();
+    if (d > 0) {
+      els.progress.max = d;
+      els.time.textContent = fmt(audio.currentTime) + ' / ' + fmt(d);
+    }
   });
 
   audio.addEventListener('ended', function () {
@@ -168,5 +328,8 @@ function MusicPlayer(root, floatBtn, list, base) {
   updateMode();
   updateToggle();
   floatBtn.hidden = false;
+  sizeSpectrum();
+  window.addEventListener('resize', sizeSpectrum);
+  // 频谱图延迟到首次 play() 时才建立 MediaElementSource（ensureAnalyser），保证初始可读到真实时长
   load(0, false);
 }

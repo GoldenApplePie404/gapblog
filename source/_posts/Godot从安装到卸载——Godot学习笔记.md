@@ -1,7 +1,7 @@
 ---
 title: "Godot从安装到卸载——Godot学习笔记"
 img_dir: godot-notes
-cover: /images/posts/godot-notes/fm.webp
+cover: /images/posts/godot-notes/icon.svg
 date: 2025-07-29 00:17:37
 categories: [["教程"], ["计算机"]]
 tags: ["Godot", "教程", "游戏开发", "笔记", "计算机"]

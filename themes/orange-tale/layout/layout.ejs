@@ -25,13 +25,14 @@
     <div class="preloader-dots"><i></i><i></i><i></i></div>
   </div>
   <!-- 漂浮暖橙圆斑（背景几何动效，fixed 底层不抢内容） -->
-  <div class="bg-deco" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i></div>
+  <div class="bg-deco" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div>
   <noscript><style>#site-preloader{display:none!important}</style></noscript>
   <!-- 音乐播放器：右下角圆钮 + 点击展开底部播放条（无歌单时隐藏） -->
   <button class="mp-float" id="mpFloat" type="button" hidden aria-label="打开音乐播放器">
     <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 3v10.55c-.59-.34-1.27-.55-2-.55-2.21 0-4 1.79-4 4s1.79 4 4 4 4-1.79 4-4V7h4V3h-6z"/></svg>
   </button>
   <div class="music-player" id="musicPlayer" data-music hidden aria-label="音乐播放器">
+    <canvas class="mp-spectrum" data-mp-spectrum aria-hidden="true"></canvas>
     <div class="mp-inner">
       <span class="mp-cover" data-mp-cover aria-hidden="true"></span>
       <div class="mp-info">

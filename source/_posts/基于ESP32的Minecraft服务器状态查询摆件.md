@@ -1,7 +1,6 @@
 ---
 title: "基于ESP32的Minecraft服务器状态查询摆件"
 img_dir: esp32-mc-status
-cover: /images/posts/esp32-mc-status/fm.webp
 date: 2024-12-01 17:01:21
 categories: [["开发板"], ["我的世界"], ["教程"]]
 tags: ["ESP32", "Micropython", "MineCraft", "开发板", "我的世界", "教程", "服务器"]

@@ -584,7 +584,7 @@ json文件：JSON（JavaScript Object Notation）是一种基于文本的数据�
       - 'player: stp minigames'
 ```
 
-# *一个错误的结构，要么没有缩进，要么缩进不完全*
+*一个错误的结构，要么没有缩进，要么缩进不完全*
 
 ---
 
