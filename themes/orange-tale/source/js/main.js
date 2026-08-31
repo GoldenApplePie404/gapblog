@@ -21,11 +21,12 @@ import toc from './modules/toc.js';
 import lightbox from './modules/lightbox.js';
 import bgDeco from './modules/bg-deco.js';
 import tables from './modules/tables.js';
+import radar from './modules/radar.js';
 
 var features = (window.__AB__ && window.__AB__.features) || {};
 var ctx = { features: features, root: document };
 
-var modules = [nav, readingBar, backTop, copyCode, codeFold, masonry, reveal, math, mermaid, typewriter, search, pageTransition, music, toc, lightbox, bgDeco, tables];
+var modules = [nav, readingBar, backTop, copyCode, codeFold, masonry, reveal, math, mermaid, typewriter, search, pageTransition, music, toc, lightbox, bgDeco, tables, radar];
 
 modules.forEach(function (mod) {
   if (features[mod.name] === false) return;

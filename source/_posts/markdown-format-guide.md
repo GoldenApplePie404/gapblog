@@ -1,6 +1,6 @@
 ---
 title: 格式总览：一篇示例文章
-date: 2026-08-25 23:59:00
+date: 2004-05-01 00:00:00
 tags: [Markdown, 教程]
 categories: [教程]
 img_dir: markdown-format-guide
@@ -36,7 +36,7 @@ cover: /images/posts/markdown-format-guide/fm.webp
 
 ## 引用（Blockquote）
 
-> 以二次元的热情，做正经事。
+> 这是一个引用段落。
 > 这是引用里的第二行。
 >
 > > 引用可以嵌套，像这样。
@@ -80,12 +80,12 @@ cover: /images/posts/markdown-format-guide/fm.webp
 
 ## 表格
 
-| 语法 | 用途 | 难度 |
+| A | B | C |
 | :--- | :---: | ---: |
-| `**加粗**` | 强调文字 | 简单 |
-| `$...$` | 行内公式 | 中等 |
-| ```mermaid | 图表 | 中等 |
-| `\frac{a}{b}` | 分数 | 较难 |
+| 1 | 111 | aaa |
+| 2 | 222 | bbb |
+| 3 | 333 | ccc |
+| 4 | 444 | ddd |
 
 > 表格支持左对齐 / 居中对齐 / 右对齐（冒号位置控制）。
 
@@ -222,7 +222,7 @@ cover: /images/posts/my-post/cover.webp
 
 本文章的配图目录是 `markdown-format-guide`（front-matter 的 `img_dir` 字段），下面这张图就是用标签语法引用的：
 
-{% postimg afd-gap.webp %}
+{% postimg fm.webp %}
 
 ## 其他格式
 
@@ -232,6 +232,20 @@ cover: /images/posts/my-post/cover.webp
   - 公式：$H_2O$、$x^2$
 - 换行：行尾两个空格或 \<br> 标签
 
+## 雷达图
+
+```radar
+{
+  "title": "雷达图示例",
+  "labels": ["项目1", "项目2", "项目3", "项目4", "项目5"],
+  "max": 20,
+  "datasets": [
+    { "label": "程度1", "data": [20, 17, 13, 15, 14] },
+    { "label": "程度2", "data": [12, 11, 9, 10, 18] }
+  ]
+}
+```
+
+
 ---
 
-> 总结：本站主题已打通 **Markdown 全格式 + KaTeX 公式 + Mermaid 图表**，图片走分类目录管理。现在，去写你的第一篇正式文章吧！

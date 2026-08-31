@@ -5,11 +5,12 @@
 //   before_post_render：截获 ```mermaid 代码块；把数学公式区替换为
 //     占位符（保护 \\ 换行、_ 下标等不被 markdown 破坏）
 //   after_post_render：还原为 <span class="math"> / <div class="mermaid">
-// 前端 modules/math.js（KaTeX）与 mermaid.js（Mermaid CDN）负责渲染
+// 前端 modules/math.js（KaTeX）与 mermaid.js（Mermaid）负责渲染（本地 vendor，无 CDN）
 // ============================================================
 
 var PH_MATH = '@@ABMATH';
 var PH_MERMAID = '@@ABMERMAID';
+var PH_RADAR = '@@ABRADAR';
 
 function escapeHtml(s) {
   return s.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
@@ -60,6 +61,10 @@ function processMarkdown(content) {
       var idx = placeholders.length;
       placeholders.push({ type: 'mermaid', raw: body.trim() });
       result += PH_MERMAID + idx + '@@';
+    } else if (lang === 'radar') {
+      var idx = placeholders.length;
+      placeholders.push({ type: 'radar', raw: body.trim() });
+      result += PH_RADAR + idx + '@@';
     } else {
       result += full; // 普通代码块原样交给 marked/highlight
     }
@@ -82,15 +87,20 @@ hexo.extend.filter.register('after_post_render', function (data) {
   var features = hexo.theme.config.features || {};
   var mathEnabled = features.math !== false;
   var mermaidEnabled = features.mermaid !== false;
+  var radarEnabled = features.radar !== false;
   var list = data._abPlaceholders;
   if (!list || list.length === 0) return data;
-  data.content = data.content.replace(/@@ABMATH(\d+)@@|@@ABMERMAID(\d+)@@/g, function (all, mi, mdi) {
-    var idx = mi != null ? Number(mi) : Number(mdi);
+  data.content = data.content.replace(/@@ABMATH(\d+)@@|@@ABMERMAID(\d+)@@|@@ABRADAR(\d+)@@/g, function (all, mi, mdi, ri) {
+    var idx = mi != null ? Number(mi) : (mdi != null ? Number(mdi) : Number(ri));
     var p = list[idx];
     if (!p) return all;
     if (p.type === 'mermaid') {
       if (!mermaidEnabled) return '```mermaid\n' + p.raw + '\n```';
       return '<div class="mermaid">' + escapeHtml(p.raw) + '</div>';
+    }
+    if (p.type === 'radar') {
+      if (!radarEnabled) return '```radar\n' + p.raw + '\n```';
+      return '<div class="radar">' + escapeHtml(p.raw) + '</div>';
     }
     if (!mathEnabled) return escapeHtml(p.raw);
     var block = p.raw.indexOf('$$') >= 0 || p.raw.indexOf('\\[') >= 0;

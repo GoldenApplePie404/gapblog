@@ -43,6 +43,7 @@ social:
 friends:
   马国记忆: https://eqmemory.cn/
   万驹同源: https://mcpc.goldenapplepie.xyz/
+  网站收录: https://goldenapplepie404.github.io/WebLinks/
 
 # ---- 功能层开关（false 则对应 JS 模块不加载） ----
 features:
@@ -52,14 +53,15 @@ features:
   copy_code: true    # 代码块复制
   masonry: true      # 瀑布流高度均衡
   reveal: true       # 滚动显现动画
-  math: true         # LaTeX 公式（KaTeX，CDN 渲染）
-  mermaid: true      # Mermaid 图表（CDN 渲染）
+  math: true         # LaTeX 公式（KaTeX，本地渲染）
+  mermaid: true      # Mermaid 图表（本地渲染）
   typewriter: true   # 首页标题打字机动画
   search: true       # 站内搜索（本地 JSON 索引，无第三方服务）
   code_fold: 15      # 长代码块折叠：数字=行数阈值（超过则默认收起），false 关闭
   lightbox: true     # 文章图片点击放大（灯箱）
   bg_deco: true      # 背景泡泡（暖橙圆斑物理碰撞漂浮）
   tables: true       # 文章内超宽表格横向滚动，避免溢出容器
+  radar: true        # 雷达图（Chart.js 本地化渲染，```radar 代码块）
 
 # 页脚
 footer:

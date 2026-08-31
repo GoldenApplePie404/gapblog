@@ -523,8 +523,8 @@ img { max-width: 100%; }
 .post-content .highlight td br { display: none; }
 .post-content .highlight .line { display: block; }
 .post-content .highlight .gutter { user-select: none; text-align: right; padding: 0 14px; color: #6b5f4a; border-right: 1px solid #2e2414; width: 1%; vertical-align: top; }
-.post-content .highlight .code { padding-left: 16px; vertical-align: top; }
-.post-content .highlight .code pre { padding: 18px 20px 18px 0; }
+.post-content .highlight .code { padding-left: 16px; vertical-align: top; max-width: 0; overflow-x: auto; -webkit-overflow-scrolling: touch; }
+.post-content .highlight .code pre { padding: 18px 20px 18px 0; white-space: pre; }
 /* 语法高亮配色 */
 .post-content .comment, .post-content .meta, .post-content .quote { color: #8a7f6a; font-style: italic; }
 .post-content .keyword, .post-content .selector-tag, .post-content .literal { color: #d9a0ff; }
@@ -671,6 +671,8 @@ img { max-width: 100%; }
 .math-inline { white-space: nowrap; }
 .mermaid { margin: 1.2em 0; text-align: center; overflow-x: auto; }
 .mermaid svg { max-width: 100%; height: auto; }
+/* 雷达图：窄容器内铺满，宽容器限宽居中，不溢出（canvas 尺寸交由 Chart.js 响应式处理） */
+.radar { margin: 1.4em auto; max-width: 460px; }
 
 /* ===== 滚动进入动画 ===== */
 .reveal { opacity: 0; transform: translateY(14px); transition: opacity 0.6s ease, transform 0.6s ease; }

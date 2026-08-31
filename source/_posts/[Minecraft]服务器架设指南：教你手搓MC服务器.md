@@ -2,7 +2,7 @@
 title: "[Minecraft]服务器架设指南：教你手搓MC服务器"
 img_dir: mc-server-guide
 date: 2023-09-15 18:33:27
-tags: ["我的世界", "教程", "服务器"]
+tags: ["我的世界", "教程", "服务器", "插件"]
 categories: ["教程"]
 cover: /images/posts/mc-server-guide/mc4-1024x534.webp
 
@@ -11,6 +11,7 @@ cover: /images/posts/mc-server-guide/mc4-1024x534.webp
 
 <!-- more -->
 
+> 注：此文是我在2023年9月15日发布的（但实际上写出时间会更早），所以会存在很多过时的内容，未来我将会重新撰写并把模组服也加入到本文中。
 
 # **前言**
 
@@ -36,7 +37,7 @@ PVP服务器则是玩家之间的竞技场，玩家可以组队或者独自与�
 
 在这里，我会给大家分享我近年来开发服务器的经验，事先说明，我并非专业人士，所以难免会出现些错误，而且我分享的是**Java版MC插件服务器（spigot端，非网易）**的开发经验，对于其它种类的大家可以自行搜索，不过还是有些经验是可以参考的，毕竟不管是哪种类型的服务器，都会有一些共同点。
 
-**最后再次声明一下，作者并非专业人士，此指南仅供参考。**
+**作者并非专业人士，此指南仅供参考。**
 
 # **第一章：创建篇**
 
@@ -46,11 +47,12 @@ PVP服务器则是玩家之间的竞技场，玩家可以组队或者独自与�
 
 在开始创建服务端之前，你需要做好以下准备。一个服务端首先得需要一个核心，核心的种类有很多，像Paper、Spigot、Forge、Fabric等。下面是这几个核心的简单介绍：
 
-Bukkit：一个最受欢迎的核心，提供了许多功能强大的插件，可以定制和扩展服务器的功能。  
-Spigot：基于Bukkit核心的优化版本，提供了更好的性能和更多的功能。  
-Paper：基于Spigot核心的进一步优化版本，提供了更高的性能和更多的功能。  
-Forge：用于modding（修改）的核心，允许玩家添加和定制游戏中的内容。  
-Fabric：另一个用于modding的核心，提供了更轻量级和快速的模组支持。
+- Bukkit：一个老牌的核心，提供了许多功能强大的插件，可以定制和扩展服务器的功能。  
+- Spigot：基于Bukkit核心的优化版本，提供了更好的性能和更多的功能。  
+- Paper：基于Spigot核心的进一步优化版本，提供了更高的性能和更多的功能。  
+- Forge：用于modding（修改）的核心，允许玩家添加和定制游戏中的内容。  
+- Fabric：另一个用于modding的核心，提供了更轻量级和快速的模组支持。
+
 
 如今市面上又有一些整合型的核心，如[Catserver](https://catmc.org/)和[MohistMC](https://mohistmc.com/)它就将Spigot,Forge,Bukkit三种核心整合在了一起，实现插件，mod互相配合。其它种类的核心，可以参考这篇文章：[**几乎所有服务器核心&配置服务端**](/images/posts/mc-server-guide/几乎所有服务器核心配置服务端.docx)
 
@@ -226,31 +228,31 @@ PAUSE
 
 *拓：.bat文件是Windows平台上的批处理脚本文件，用于批量执行一系列命令。  
 以下是一些基本的.bat语法：  
-@echo off：用于关闭命令回显，使执行时不显示执行的命令本身。  
-REM：用于添加注释，不会执行注释后面的内容。  
-SET：用于设置变量。  
-ECHO：用于在命令行输出文本。  
-IF：用于条件判断。  
-FOR：用于循环操作。  
-GOTO：用于跳转到脚本中的标签。  
-CALL：用于调用另一个批处理文件。  
-PAUSE：用于暂停脚本的执行，等待用户按下任意键继续。  
-EXIT：用于退出脚本的执行。  
+`@echo off`：用于关闭命令回显，使执行时不显示执行的命令本身。  
+`REM`：用于添加注释，不会执行注释后面的内容。  
+`SET`：用于设置变量。  
+`ECHO`：用于在命令行输出文本。  
+`IF`：用于条件判断。  
+`FOR`：用于循环操作。  
+`GOTO`：用于跳转到脚本中的标签。  
+`CALL`：用于调用另一个批处理文件。  
+`PAUSE`：用于暂停脚本的执行，等待用户按下任意键继续。  
+`EXIT`：用于退出脚本的执行。  
 以上是一些基本的.bat语法，可以在批处理脚本中结合这些语法来完成各种操作。具体语法的使用方式可以参考Windows的批处理文档或在线资源。*
 
 这里如果你使用**“java -Xms1G -Xmx2G -jar spigot-1.16.5.jar”**脚本打开1.16.5出现闪退的话，那么这是因为是服务端版本与java版本不匹配，除非你电脑内部默认的Java环境刚好与之匹配。这时候你可以选择使用刚刚拓展脚本中的第一种，因为可以直接设置Java路径，或者直接在已有的脚本内添加java路径。设置好正确的java路径后双击就不会闪退了。然后双击启动脚本，弹出一个窗口后等它加载完毕就可以进行下一步了。
 
 **附：各个版本对应的java版本：**
 
-1.7.x / 1.8.x / 1.9.x - 使用Java7(不推荐)或Java8运行  
-1.10.x / 1.12.x - 使用Java8运行  
-1.12.x / 1.13.x / 1.15.x - 使用Java8,Java9或Java12运行  
-1.16.x - 使用Java8,Java9,Java12或Java16运行  
-1.17.x - 使用Java16或Java17运行  
-1.18.x - 使用Java17或Java18运行  
-1.18.x / 1.19.x - 使用Java17或更高版本运行.
+- 1.7.x / 1.8.x / 1.9.x - 使用Java7(不推荐)或Java8运行  
+- 1.10.x / 1.12.x - 使用Java8运行  
+- 1.12.x / 1.13.x / 1.15.x - 使用Java8,Java9或Java12运行  
+- 1.16.x - 使用Java8,Java9,Java12或Java16运行  
+- 1.17.x - 使用Java16或Java17运行  
+- 1.18.x - 使用Java17或Java18运行  
+- 1.18.x / 1.19.x - 使用Java17或更高版本运行.
 
-弹出窗口后，这时候你会发现文件夹内多出了一些新的文件，你需要先找到eula.txt,打开后将里面的eula=false 的false换成true, 这个eula文件就是协议，改成true就相当于同意。然后保存好协议后再次双击启动脚本，等它加载完并出现”Done”，就说明这个服务端已经创建完毕。
+弹出窗口后，这时候你会发现文件夹内多出了一些新的文件，你需要先找到`eula.txt`,打开后将里面的`eula=false` 的`false`换成`true`, 这个eula文件就是协议，改成true就相当于同意。然后保存好协议后再次双击启动脚本，等它加载完并出现”Done”，就说明这个服务端已经创建完毕。
 
 ![](/images/posts/mc-server-guide/mc4-1024x534.webp)
 
@@ -416,7 +418,7 @@ json文件：JSON（JavaScript Object Notation）是一种基于文本的数据�
 
 目前来说，你所完成的服务器只能供自己游玩，因为这是本地IP，自己的电脑当然能连。要让远在万里的朋友也能进入，我们就需要一个内网穿透工具，这个工具可以将你的内网（局域网）服务器映射到外部网络（互联网）上。
 
-市面上有很多内网穿透工具，在这里我推荐我经常使用的：[樱花](https://www.natfrp.com/)。这是个免费的内网穿透工具。花一点时间注册并且实名认证（可能会花1元进行实名认证），然后选择适合你电脑系统的启动器进行下载。
+市面上有很多内网穿透工具，在这里我推荐我经常使用的：[SakuraFrp](https://www.natfrp.com/)。这是个免费的内网穿透工具。花一点时间注册并且实名认证（可能会花1元进行实名认证），然后选择适合你电脑系统的启动器进行下载。
 
 下载完毕后，打开启动器，在樱花官网的首页里找到你的访问密钥（注意这个访问密钥相当于密码，请妥善保管！），将其复制在启动器的相应位置，这样你就可以登录樱花启动器了。在隧道界面点击“+”，然后选择java进程，并在右下角选择合适的节点，选择延迟低的即可，最后点击创建（如下图）。
 
@@ -428,7 +430,7 @@ json文件：JSON（JavaScript Object Notation）是一种基于文本的数据�
 ![](/images/posts/mc-server-guide/mc10.webp)
 ![](/images/posts/mc-server-guide/mc11-1024x549.webp)
 
-这里只演示樱花的内网穿透工具的使用方法，对于其它的穿透工具请自行查看相关教程。或者你可以尝试自己购买/租用一台服务器主机，参考教程：[我的世界Minecraft服务器硬件配置需求](https://www.bilibili.com/video/BV1u84y1h7wC/?spm_id_from=333.337.search-card.all.click&vd_source=2ae35f299b5a9f754c695bb1e968e1bd)、[只要239元？~从选购硬件开始~ 一步步教你搭建MC服务器](https://www.bilibili.com/video/BV18A411e78d/?spm_id_from=333.337.search-card.all.click&vd_source=2ae35f299b5a9f754c695bb1e968e1bd)。又或者你可以选择在一些不错的服务器租用平台租服，推荐：[PixelCloud](https://pixelcloud.cn/)、[喵喵互联](https://miaomiao.games/index.php)，这俩个都提供保姆般的教程，并且对新手十分友好。
+这里只演示樱花的内网穿透工具的使用方法，对于其它的穿透工具请自行查看相关教程。或者你可以尝试自己购买/租用一台服务器主机，参考教程：[我的世界Minecraft服务器硬件配置需求](https://www.bilibili.com/video/BV1u84y1h7wC/?spm_id_from=333.337.search-card.all.click&vd_source=2ae35f299b5a9f754c695bb1e968e1bd)、[只要239元？从选购硬件开始, 一步步教你搭建MC服务器](https://www.bilibili.com/video/BV18A411e78d/?spm_id_from=333.337.search-card.all.click&vd_source=2ae35f299b5a9f754c695bb1e968e1bd)。又或者你可以选择在一些不错的服务器租用平台租服，推荐：[PixelCloud](https://pixelcloud.cn/)、[喵喵互联](https://miaomiao.games/index.php)，这俩个都提供保姆般的教程，并且对新手十分友好。
 
 至此，你已经学会如何创建一个可以和你朋友一起联机的服务器了。接下来我们要做的事就是给这个服务器升级，添加一些有用的插件。
 
@@ -503,7 +505,9 @@ json文件：JSON（JavaScript Object Notation）是一种基于文本的数据�
 
 **占位符**是一种特殊的代码，用于表示某个位置应该填充对应玩家的信息。比如在服务器的配置文件中，我们可以使用占位符来动态引用与玩家相关的数据。这些占位符的语法通常由插件或者服务器软件解析，并把它们替换为真正的玩家数据。
 
-举个例子，想象一下有一个服务器配置文件，里面有一行文本，其中包含了 %player% 这样的占位符。当服务器处理这个配置文件时，它会将占位符 %player% 替换为正在执行命令或事件的玩家的信息。也就是说，不论哪个玩家在执行命令，这个占位符都会被替换为相应玩家的名字、UUID 或者其他需要的数据。使用占位符能够使配置文件更加灵活和动态，因为它们使得数据能够根据玩家的具体情况进行自动填充。这样，服务器可以根据玩家的情况提供不同的功能和反馈。
+举个例子，有一个服务器配置文件，里面有一行文本，其中包含了 `%player%` 或者`{player}`这样的占位符。当服务器处理这个配置文件时，它会将占位符替换为正在执行命令或事件的玩家的信息。比如，如果一个玩家执行了 `/say %player%` 命令，那么服务器会将 `%player%` 替换为执行命令的玩家的名字。如果执行命令的玩家的名字是 "Gap"，那么服务器会将 `%player%` 替换为 "Gap"。
+
+也就是说，不论哪个玩家在执行命令，这个占位符都会被替换为相应玩家的名字、UUID 或者其他需要的数据。使用占位符能够使配置文件更加灵活和动态，因为它们使得数据能够根据玩家的具体情况进行自动填充。这样，服务器可以根据玩家的情况提供不同的功能和反馈。
 
 ### **二．配置插件**
 
@@ -566,7 +570,7 @@ json文件：JSON（JavaScript Object Notation）是一种基于文本的数据�
         - 'player: stp minigames'
 ```
 
-#*一个正确的结构，该缩进的地方就缩进*
+*一个正确的结构，该缩进的地方就缩进*
 
 ---
 
@@ -608,15 +612,11 @@ json文件：JSON（JavaScript Object Notation）是一种基于文本的数据�
 
 ### **五．开发插件**
 
-那么如果你找不到一个你想要的插件，你可以尝试自己写一个，不过这个要求相对来说要高。首先你得了解计算机编程基础知识和java语言的基本语法，以及MC的[Spigot API文档](https://spigotmc-cn.netlify.app/)，然后你可以参考下面的文章开发你的插件（均来自本博客，你也可以自行搜索相关教程）。
+那么如果你找不到一个你想要的插件，你可以尝试自己写一个，不过这个要求相对来说要高。首先你得了解计算机编程基础知识和java语言的基本语法，以及MC的[Spigot API文档](https://spigotmc-cn.netlify.app/)。
 
-[【环境搭建】](https://blog.goldenapplepie.xyz/?p=1135)
+编写"我的世界"插件需要一定的编程知识和经验。如果你是初学者，可以查阅相关的插件开发教程和文档，或参考其他开发者的示例代码。同时，积极参与相关社区，与其他插件开发者交流经验和技巧。顺便说一下，本人并非专业人士，对于插件开发还处于萌新状态，这些建议仅供参考，如果你不放心，你也可以选择去询问专业人士或者在互联网上搜索，或者利用AI。
 
-[【第一个插件】](https://blog.goldenapplepie.xyz/?p=1160)
-
-[【命令】](https://blog.goldenapplepie.xyz/?p=1332)
-
-编写"我的世界"插件需要一定的编程知识和经验。如果你是初学者，可以查阅相关的插件开发教程和文档，或参考其他开发者的示例代码。同时，积极参与相关社区，与其他插件开发者交流经验和技巧。顺便说一下，本人并非专业人士，对于插件开发还处于萌新状态，这些建议仅供参考，如果你不放心，你也可以选择去询问专业人士或者在互联网上搜索。推荐教程视频（这有一个系列）：[我的世界插件开发](https://www.bilibili.com/video/BV15S4y1g7Ho/?spm_id_from=333.999.0.0&vd_source=2ae35f299b5a9f754c695bb1e968e1bd)。
+推荐教程视频（这有一个系列）：[我的世界插件开发](https://www.bilibili.com/video/BV15S4y1g7Ho/?spm_id_from=333.999.0.0&vd_source=2ae35f299b5a9f754c695bb1e968e1bd)。
 
 # **第三章：地图篇**
 
@@ -634,9 +634,9 @@ json文件：JSON（JavaScript Object Notation）是一种基于文本的数据�
 
 **datapacks**： 存储自定义数据包的文件夹。
 
-**DIM1**：保存的是地狱维度的地图数据。
+**DIM1**：保存的是末地维度的地图数据。
 
-**DIM-1**: 存放末地维度相关文件的文件夹。
+**DIM-1**: 存放下界维度相关文件的文件夹。
 
 **entities**：包含了地图中的实体的数据信息，可以用于保存和加载地图中的实体。每个实体都有自己的实体ID、坐标、速度、属性等信息，这些信息可以在游戏中进行修改和控制。通过修改entities文件中的数据，可以对地图中的实体进行自定义和编辑。
 
@@ -684,7 +684,7 @@ json文件：JSON（JavaScript Object Notation）是一种基于文本的数据�
 
 总之，通过命令方块和数据包，你可以在MC中实现一些类似于插件的功能。更厉害的是，如果再搭配上一个资源包，让它和数据包紧密合作，你几乎能复刻出一个模组的效果！数据包负责游戏机制，而资源包负责游戏定制（如贴图、模型、音乐等），两者相辅相成，共同为玩家带来更加丰富和个性化的游戏体验。
 
-如果你恰好了解MC的一些指令，那么你完全可以自创个数据包，来实现你想要的功能。不过在这里我不会过多介绍如何制作数据包，具体的方法你可以自行搜索。也可以查看相关文章，或者观看[教程视频](https://www.bilibili.com/video/BV1jS4y1j77W/?spm_id_from=333.999.0.0&vd_source=2ae35f299b5a9f754c695bb1e968e1bd)。如果自己不想做，你可以在一些MC资源网站查找你想要的数据包。比如[PlanetMC](https://www.planetminecraft.com/ )等。当然，你不嫌弃的话，你可以看看本博客内的[数据包教程文章](https://blog.goldenapplepie.xyz/?p=1334)。
+如果你恰好了解MC的一些指令，那么你完全可以自创个数据包，来实现你想要的功能。不过在这里我不会过多介绍如何制作数据包，具体的方法你可以自行搜索。也可以查看相关文章，或者观看[教程视频](https://www.bilibili.com/video/BV1jS4y1j77W/?spm_id_from=333.999.0.0&vd_source=2ae35f299b5a9f754c695bb1e968e1bd)。如果自己不想做，你可以在一些MC资源网站查找你想要的数据包。比如[PlanetMC](https://www.planetminecraft.com/ )等。当然，你不嫌弃的话，你可以看看本博客内的[数据包教程文章](/gapblog/2024/06/01/%5BMinecraft%5D数据包教程-从入门到入土/)。
 
 下载好你想要的数据包后，将它放入地图文件的datapacks文件夹内，解压还是不解压都可以，只要文件夹/压缩包内直接对应数据包的目录结构就可以，不过“套娃”式的数据包是根本不会响应的。最后进入游戏你就可以在这个世界使用这个数据包的功能了。
 
@@ -692,7 +692,7 @@ json文件：JSON（JavaScript Object Notation）是一种基于文本的数据�
 
 当你测试完这个数据包，准备将它丢到服务器（测试服务器版本:1.16.5）里时，如果你服务器提前安装了多世界插件（测试使用的是MultiWorld），并且创建了多个世界，打算将各种数据包分别丢入各个地图文件里，这时候你需要注意了。
 
-你以为数据包能像插件那样，在不同世界间互不干扰，但事实并非如此。数据包和多世界插件并不兼容，它们之间会产生明显的冲突。比如，你现在通过多世界插件在服务器中创建了两个世界，并且为这两个世界添加了不同的数据包（A世界装有A数据包，B世界装有B数据包），实际运行时，容易出现冲突。注意这个冲突不是体现在数据包之间的冲突，而是体现在多人游戏的冲突。例如，这两个世界都有玩家进行游玩，数据包也在正常运行，但A世界的玩家可能会“读取”到B世界数据包运行的内容（类似于数据包内的提示文字），然后你的服务器因此变得一塌糊涂。
+你以为数据包能像插件那样，在不同世界间互不干扰，但事实并非如此。数据包和有的多世界插件并不兼容，它们之间会产生明显的冲突。比如，你现在通过多世界插件在服务器中创建了两个世界，并且为这两个世界添加了不同的数据包（A世界装有A数据包，B世界装有B数据包），实际运行时，容易出现冲突。注意这个冲突不是体现在数据包之间的冲突，而是体现在多人游戏的冲突。例如，这两个世界都有玩家进行游玩，数据包也在正常运行，但A世界的玩家可能会“读取”到B世界数据包运行的内容（类似于数据包内的提示文字），然后你的服务器因此变得一塌糊涂。
 
 所以说，数据包不兼容多世界插件是个致命的缺点，这样你就只能将这些地图分开，并且分别创建服务端。当然这些冲突也不是绝对的，有些数据包配合多世界插件还是可以运行的，而为了避免冲突，最好在使用数据包和多世界插件之前，先了解它们的功能和修改内容，确保它们之间没有相互冲突的修改。如果发生冲突，可能需要进行调整或者选择使用不同的数据包或插件来解决冲突。
 
@@ -714,23 +714,19 @@ Bungeecord是一种Minecraft服务器代理软件，它允许玩家在多个不�
 
 然后将文件按照一定结构放置（如下图）
 
+```text
 你放置BungeeCord的文件夹/
 
 ├─  BungeeCord.jar
-
 │  ├─  module
-
-│                ├─  cmd\_alert.jar
-
-│                ├─  cmd\_find.jar
-
-│                ├─  cmd\_list.jar
-
-│                ├─  cmd\_send.jar
-
-│                ├─  cmd\_server.jar
-
-└─          └─reconnect\_yaml.jar
+│  ├─  cmd\_alert.jar
+│  ├─  cmd\_find.jar
+│  ├─  cmd\_list.jar
+│  ├─  cmd\_send.jar
+│  ├─  cmd\_server.jar
+│  └─reconnect\_yaml.jar
+└─
+```
 
 ![](/images/posts/mc-server-guide/mc21-1024x564.webp)
 ![](/images/posts/mc-server-guide/mc22-1024x564.webp)
@@ -769,7 +765,7 @@ listeners:
   priorities:
   - a
   bind_local_address: true
-  host: 0.0.0.0:25566
+  host: 0.0.0.0:25569
   max_players: 50
   tab_size: 60
   force_default_server: true
@@ -817,7 +813,7 @@ servers:               # 子服列表
 
 以上就是BungeeCord端配置文件的示例，大家可以按照自己的需求进行修改。对于其它设置的功能自行搜索。
 
-设置完成后，再次双击启动，然后再打开默认服的文件夹，再次打开server.properties，找到server-port，将其修改为25566。端口你可以按情况自行设置，只要与BungeeCord配置文件内的相对应即可。
+设置完成后，再次双击启动，然后再打开默认服的文件夹，再次打开server.properties，找到server-port，将其修改为25569。端口你可以按情况自行设置，只要与BungeeCord配置文件内的相对应即可。
 
 端口修改完后先别着急打开，这时候你需要下载一个跨服传送插件：[Stp](https://www.spigotmc.org/resources/serverteleport-1-7-1-15-status-query-bungee-teleport.70799/)
 
@@ -840,9 +836,9 @@ servers:               # 子服列表
 你可以试用相关插件编辑全息字，因为这样非常方便。当然使用指令也是可以的，大概原理就是通过summon指令召唤个隐形的并且命名的盔甲架，指令如下：
 
 ---
-
-**/summon minecraft:armor\_stand ~ ~ ~ {CustomName:"[{\"text\":\"浮空字\",\"color\":\"gold\",\"bold\":false,\"italic\":false,\"underlined\":false,\"strikethrough\":false,\"obfuscated\":false}]",Tags:["ABC"],CustomNameVisible:1b,Invulnerable:1b,PersistenceRequired:1b,NoGravity:1b,Invisible:1}**
-
+```text
+/summon minecraft:armor\_stand ~ ~ ~ {CustomName:"[{\"text\":\"浮空字\",\"color\":\"gold\",\"bold\":false,\"italic\":false,\"underlined\":false,\"strikethrough\":false,\"obfuscated\":false}]",Tags:["ABC"],CustomNameVisible:1b,Invulnerable:1b,PersistenceRequired:1b,NoGravity:1b,Invisible:1}
+```
 *原理请自行搜索！*
 
 根据上面的指令原理，我自创了一个[全息字生成器](https://blog.goldenapplepie.xyz/mcholsum/)。
@@ -877,27 +873,32 @@ servers:               # 子服列表
 
 当然，前面我们也说了，如果要搭建一个真正意义上的服务器，你需要的是一台合适的机子和一个域名的。至于如何选择服务器，前文有相关的参考链接，在这我不多做赘述，本小节的目的是探讨域名的创建。
 
-那么什么是域名？拿一个网址举个例子，比如我的博客的网址：blog.goldenapplepie.xyz ，这个网址就可以称为一个域名，但网址和域名在某些场合意义又不一样，网址就是浏览器地址栏中的文本集合，它包含域名。域名也可以称为网址，但网址不能都称为域名。举个例子来说，比如这篇文章的网址：https://blog.goldenapplepie.xyz/?p=915，它就不是个域名，因为它还包含了路径/目录,所以它只能称为一个网址。对于域名在这里就不多做介绍了，想了解更多你可以观看这个视频（有时间最好把这个系列都看完，很有用的科普教程视频）：
+那么什么是域名？拿一个网址举个例子，比如我的博客的网址：blog.goldenapplepie.xyz ，这个网址就可以称为一个域名，但网址和域名在某些场合意义又不一样，网址就是浏览器地址栏中的文本集合，它包含域名。域名也可以称为网址，但网址不能都称为域名。对于域名在这里就不多做介绍了，想了解更多你可以观看这个视频（有时间最好把这个系列都看完，很有用的科普教程视频）：
 
 [【白话科普】域名？网址？原来域名是这么个玩意 啊！终于听懂了 | 互联网的运作原理 | 网站上线发布分享教程系列内容第三期\_哔哩哔哩\_bilibili](https://www.bilibili.com/video/BV1ma4y1h79M/?spm_id_from=333.999.0.0&vd_source=2ae35f299b5a9f754c695bb1e968e1bd)
 
 当你购买了一个自己的域名后，你要做的就是解析。整个域名的作用就可以理解成，访问一个地址，然后通过域名的解析，访问到另一个地址，这一连接可以通过域名解析来完成。域名的解析分为好多种，来实现多种不同地址的解析。图示如下:
 
-![](/images/posts/mc-server-guide/image.webp)
+```mermaid
+flowchart LR
+    N1["数字IP"] == A ==> N2["域名IP"]
+    N3["域名IP"] == CNAME ==> N2
+    N2["域名IP"] == SRV ==> N4["无端口域名IP"]
+```
 
-通常，IP地址初始为 XXX.XXX.XXX.XXX ，这就叫做数字IP，假如我们的ip为sdns.hka2.starzv.com.，而且我们买好的域名为 goldenapplepie.xyz ,如果要将地址 blog.goldenapplepie.xyz 解析到 sdns.hka2.starzv.com.（以我博客为例） ，在你的域名提供商那边添加一个解析记录，就像这样：
+通常，IP地址初始为 `XXX.XXX.XXX.XXX` ，这就叫做数字IP，假如我们的ip为`sdns.hka2.starzv.com`.，而且我们买好的域名为 `goldenapplepie.xyz` ,如果要将地址` blog.goldenapplepie.xyz` 解析到 `sdns.hka2.starzv.com` ，在你的域名提供商那边添加一个解析记录，就像这样：
 
 ![](/images/posts/mc-server-guide/image-3-1024x95.webp)
 
-解析完成后就可以通过blog.goldenapplepie.xyz来访问了。
+解析完成后就可以通过`blog.goldenapplepie.xyz`来访问了。
 
 对于MC服务器，如果服务器提供商提供的是一串数字IP，那么得做个额外操作。如下图：
 
 ![](/images/posts/mc-server-guide/image-1-1024x108.webp)
 
-先用IP创建一个新域名的解析记录（A记录），这个新域名类似于桥梁，上面图片的例子就是gappdc.goldenapplepie.xyz，其对应的IP为XX.XX.XXX.XXX(打码x)，然后继续利用这个新域名创建一条新的解析记录（SRV记录，要按照格式填写：优先级、空格、权重、空格、端口、空格、主机名），最后在主机记录填写\_minecraft.\_tcp.xxx，本例中xxx即为mcpdc,所以最终你的MC服务器地址为：mcpdc.goldenapplepie.xyz，解析完成且DNS缓存刷新后进入游戏填上这个地址就可以访问服务器了。
+先用IP创建一个新域名的解析记录（A记录），这个新域名类似于桥梁，上面图片的例子就是`gappdc.goldenapplepie.xyz`，其对应的IP为`XX.XX.XXX.XXX`(打码x)，然后继续利用这个新域名创建一条新的解析记录（SRV记录，要按照格式填写：优先级、空格、权重、空格、端口、空格、主机名），最后在主机记录填写`\_minecraft.\_tcp.xxx`，本例中xxx即为mcpdc,所以最终你的MC服务器地址为：`mcpdc.goldenapplepie.xyz`，解析完成且DNS缓存刷新后进入游戏填上这个地址就可以访问服务器了。
 
-*备注：你可以打开命令提示符，输入ipconfig/flushdns刷新DNS缓存。*
+*备注：你可以打开命令提示符，输入`ipconfig/flushdns`刷新DNS缓存。*
 
 ### **五．管理**
 
@@ -1324,7 +1325,7 @@ world-settings:
 
          keep-spawn-loaded: false
 
-         false auto-save-interval: 11050
+         auto-save-interval: 11050
 
          anti-xray:
 
@@ -1414,7 +1415,7 @@ FPS 评级
 
 数据库是存储和管理大量数据的仓库，具有有组织性、可共享性和统一性等特点。对于MC服务器来说，你可以利用数据库存储服务器数据，这些数据包括但不限于玩家信息（如用户名、等级、成就）、游戏世界状态（如区块数据、实体位置）、经济系统数据（如货币、交易记录）以及服务器配置和日志等。
 
-可供MC服务器使用的数据库系统有很多，对于插件而言，大多数都会使用到**[MySQL](https://www.mysql.com/)**或**[SQLite](https://www.sqlite.org/index.html)**。同时，大部分插件都会提供一个本地数据库存储的系统，如果你没有远程数据库或者一个实实在在的本地数据库的话，很多插件会默认将数据存储至服务器内，它们可能是出现在插件文件夹内的db（指的是Data Base File，是一种用于存储和管理数据的文件格式）、json、yml格式文件，其中，，json与yml是可以直接进行修改的，而db文件通常需要特殊的程序才能识别和改写。
+可供MC服务器使用的数据库系统有很多，对于插件而言，大多数都会使用到**[MySQL](https://www.mysql.com/)**或**[SQLite](https://www.sqlite.org/index.html)**。同时，大部分插件都会提供一个本地数据库存储的系统，如果你没有远程数据库或者一个实实在在的本地数据库的话，很多插件会默认将数据存储至服务器内，它们可能是出现在插件文件夹内的db（指的是Data Base File，是一种用于存储和管理数据的文件格式）、json、yml格式文件，其中，json与yml是可以直接进行修改的，而db文件通常需要特殊的程序才能识别和改写。
 
 *未完待续……*
 
@@ -1855,7 +1856,8 @@ panels:
 
 这篇附录，我来分享一些我使用过的插件，也许这些插件中就有你需要的。记住，就算插件的数量有限，但用它们组合出来的玩法的无限的。（插件来源：[MC Admin](https://www.mcadmin.cn/)，[IEcraft](https://www.iecraft.com/news/)，[Bukkit](https://dev.bukkit.org/)，[Spigot](https://www.spigotmc.org/)等）
 
-(注：插件分享会持续更新)
+> 注：插件分享会持续更新
+> 由于大部分插件均来自MCBBS，但MCBBS当前已经关停，所以以下插件分享的链接均是重置过后的，存在部分插件缺失的情况
 
 1. [SheepQuest](https://www.spigotmc.org/resources/sheepquest-minigame-for-your-server-1-9-1-16.83005/download?version=360093)：抢羊大战，是个很有意思的玩法。玩法简介:玩家会在竞技场内被分为四个队伍，竞技场的中心点会不间断的生成羊，玩家需要用特殊工具捕捉羊并将其安全带回队伍领地(并获得1分)，途中如果被攻击，羊会被击落，最终得分最高的队伍胜利！适用于游戏服。
 2. [XgpLottery](https://www.spigotmc.org/resources/xgplottery.111873/)： 拥有保底机制、抽奖记录、GUI界面操作的抽奖插件。
