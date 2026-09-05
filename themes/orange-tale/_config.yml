@@ -62,6 +62,7 @@ features:
   bg_deco: true      # 背景泡泡（暖橙圆斑物理碰撞漂浮）
   tables: true       # 文章内超宽表格横向滚动，避免溢出容器
   radar: true        # 雷达图（Chart.js 本地化渲染，```radar 代码块）
+  click_fx: true     # 暖橙点击特效 + 光标拖尾（纯 Canvas 2D，零依赖）
 
 # 页脚
 footer:

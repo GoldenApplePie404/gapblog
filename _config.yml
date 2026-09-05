@@ -4,7 +4,7 @@
 
 # 站点基础设置
 title: 金苹果派の博客
-subtitle: ''
+subtitle: '金苹果派の小破站'
 description: ''
 keywords:
 author: 金苹果派 (GoldenApplePie)
@@ -12,8 +12,7 @@ language: zh-CN
 timezone: ''
 
 # 网站 URL 配置
-## 在这里填写你的站点地址。例如使用 GitHub Pages，则填写：'https://username.github.io/project'
-url: https://goldenapplepie404.github.io/gapblog
+url: https://goldenapplepie404.github.io/gapblog      # 站点地址。例如使用 GitHub Pages，则填写：'https://username.github.io/project'
 root: /gapblog/
 permalink: :year/:month/:day/:title/
 permalink_defaults:

@@ -22,11 +22,12 @@ import lightbox from './modules/lightbox.js';
 import bgDeco from './modules/bg-deco.js';
 import tables from './modules/tables.js';
 import radar from './modules/radar.js';
+import clickFx from './modules/click-fx.js';
 
 var features = (window.__AB__ && window.__AB__.features) || {};
 var ctx = { features: features, root: document };
 
-var modules = [nav, readingBar, backTop, copyCode, codeFold, masonry, reveal, math, mermaid, typewriter, search, pageTransition, music, toc, lightbox, bgDeco, tables, radar];
+var modules = [nav, readingBar, backTop, copyCode, codeFold, masonry, reveal, math, mermaid, typewriter, search, pageTransition, music, toc, lightbox, bgDeco, tables, radar, clickFx];
 
 modules.forEach(function (mod) {
   if (features[mod.name] === false) return;

@@ -9,7 +9,7 @@ img_dir: my-post                 # 本文的英文图片目录名（纯英文小
 # banner: /images/posts/my-post/banner.jpg  # 文章页顶部横幅（可选）
 # sticky: true                   # 设为 true 可在首页置顶
 # 配图规则：图片放 source/images/posts/<img_dir>/ 下
-#   引用：{% postimg 文件名.jpg %} 或 ![](/images/posts/<img_dir>/文件名.jpg)
+#   引用：{% postimg 文件名.jpg %} 或 原版markdown语法：![](/images/posts/<img_dir>/文件名.jpg)
 # 摘要：正文中用 <!-- more --> 分割，之前的内容会作为首页卡片摘要
 ---
 
