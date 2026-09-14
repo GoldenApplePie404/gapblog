@@ -12,8 +12,8 @@ language: zh-CN
 timezone: ''
 
 # 网站 URL 配置
-url: https://blog.goldenapplepie.xyz/gapblog      # 自定义域名（blog.goldenapplepie.xyz）+ 子路径部署
-root: /gapblog/
+url: https://blog.goldenapplepie.xyz      # 自定义域名根路径部署
+root: /
 permalink: :year/:month/:day/:title/
 permalink_defaults:
 pretty_urls:
