@@ -38,3 +38,7 @@ tools/
 backup-assets/
 .wb-preview/
 overview.md
+
+_gh_rel.json
+_npmpack/
+_probe.js

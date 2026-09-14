@@ -16,6 +16,8 @@ cover: /images/posts/markdown-format-guide/fm.webp
 - [x] 表格、代码块
 - [x] LaTeX 公式（行内 + 块级）
 - [x] Mermaid 图表（流程图 / 时序图 / 甘特图）
+- [x] ABC 乐谱渲染（```abc 代码块，多声部 + 调号 + 拍号）
+- [x] Chart.js 图表（line / bar / doughnut / polarArea / radar）
 - [x] 水平线、图片语法说明
 
 ---
@@ -208,6 +210,148 @@ gantt
     部署上线     :a4, after a3, 3d
 ```
 
+## ABC 乐谱（五线谱渲染）
+
+### 单声部：小星星（带播放）
+
+```abc
+---
+tempo: 120
+instrument: piano
+loop: true
+---
+T: 小星星
+C: 民谣
+M: 4/4
+L: 1/4
+K: C
+C C G G | A A G2 |
+F F E E | D D C2 |
+G G F F | E E D2 |
+G G F F | E E D2 |
+C C G G | A A G2 |
+F F E E | D D C2 |
+```
+
+### 吉他六线谱
+
+```abc
+---
+tablature: guitar
+tempo: 100
+instrument: guitar
+---
+T: 小星星（吉他六线谱）
+M: 4/4
+L: 1/4
+K: G clef=treble
+C C G G | A A G2 |
+F F E E | D D C2 |
+```
+
+### 双声部对位
+
+```abc
+---
+tempo: 140
+instrument: flute
+loop: true
+---
+T: 双声部示例
+M: 3/4
+L: 1/8
+K: G clef=treble
+V:1
+| "1" d2 e f | g f e d |
+V:2
+| z4 A B | c B A z |
+```
+
+> **Frontmatter 语法**：在 ABC 串开头用 `---` 包 YAML 块，支持字段：
+> - `tempo: 100` 速度
+> - `instrument: piano|guitar|bass|flute|violin|mandolin|trumpet|drums` 乐器
+> - `loop: true` 循环播放
+> - `tablature: guitar` 自动加吉他/贝斯/小提琴六线谱
+> - `chordgrid: "withMusic"` 在五线谱上方叠加和弦图（6.6.0+）
+> - `transpose: {from: "C", to: "D"}` 一键转调（渲染版本）
+> - `abcjs: '{"viewportHorizontal":true}'` 直接透传 renderAbc 的 options JSON
+>
+> 控制栏：▶ 播放 · ■ 停止 · 乐器下拉 · 速度滑块 · ↻ 循环 · ⤓ 下载 MIDI
+>
+> 语法参考：[ABC Notation 速查](https://abcjs.net/abcjs-guide/guide.html)
+
+## Chart.js 图表（通用，基于 JSON 配置）
+
+### 折线图
+
+```chart
+{
+  "type": "line",
+  "title": "历年发文量",
+  "labels": ["2022", "2023", "2024", "2025", "2026"],
+  "datasets": [
+    { "label": "文章数", "data": [5, 18, 32, 41, 27] }
+  ]
+}
+```
+
+### 柱状图
+
+```chart
+{
+  "type": "bar",
+  "title": "分类分布",
+  "labels": ["技术", "生活", "游戏", "硬件", "AI", "学习"],
+  "legend": false,
+  "datasets": [
+    { "label": "文章数", "data": [28, 12, 16, 9, 14, 11], "color": "#FF9700" }
+  ]
+}
+```
+
+### 环形图
+
+```chart
+{
+  "type": "doughnut",
+  "title": "兴趣爱好占比",
+  "legend": "right",
+  "datasets": [
+    { "label": "占比", "data": [30, 20, 15, 12, 13, 10] }
+  ]
+}
+```
+
+### 极区图
+
+```chart
+{
+  "type": "polarArea",
+  "title": "本月游戏时长（小时）",
+  "labels": ["MC", "原神", "鸣潮", "卡拉彼丘", "Phira", "BanG Dream!", "深岩银河"],
+  "max": 30,
+  "datasets": [
+    { "label": "时长", "data": [8, 12, 6, 4, 10, 5, 7] }
+  ]
+}
+```
+
+### 雷达图（旧语法向后兼容，自动补 type:radar）
+
+```radar
+{
+  "title": "技能熟悉度",
+  "labels": ["Python", "C++", "Web", "Godot", "硬件", "AI"],
+  "max": 10,
+  "datasets": [
+    { "label": "现状", "data": [9, 8, 7, 6, 8, 7] },
+    { "label": "目标", "data": [10, 9, 9, 8, 9, 9] }
+  ]
+}
+```
+
+> 所有图表自动跟随主题暖橙配色，可用 `datasets[].color` 自定义单色，多数据集自动轮换色盘。
+
 ## 图片（语法说明）
 
 图片直接引用 `source/images/` 分类目录下的文件：
@@ -232,20 +376,93 @@ cover: /images/posts/my-post/cover.webp
   - 公式：$H_2O$、$x^2$
 - 换行：行尾两个空格或 \<br> 标签
 
-## 雷达图
+---
 
-```radar
+
+## 提示块（Admonition / Callout）
+
+GitHub / Typora 风格的彩色提示框，支持 **note / tip / info / warning / danger / success / question** 七种类型。
+
+`markdown
+> [!warning] 升级前务必备份！
+> 本次更新修改了数据库 schema，升级前请先执行 git stash + pg_dump。
+`
+
+渲染效果如下：
+
+> [!note] 这是一条 Note
+> 常规提示，用于补充说明或背景信息。
+
+> [!tip] 小贴士
+> 实用技巧和最佳实践。
+
+> [!warning] 警告
+> 需要注意的潜在风险。
+
+> [!danger] 危险
+> 可能导致数据丢失或不可逆操作。
+
+> [!success] 成功
+> 操作完成、测试通过。
+
+> [!question] 常见问题
+> FAQ 条目或思考题。
+
+> 所有提示块可空标题（只写 > [!note] 不写内容也能渲染）。
+
+## 图表 CSV 数据源
+
+除了手写 `datasets` JSON，也可以用 CSV 字符串或远程 CSV 文件快速画图。CSV 格式：**第一行写列名**（第一列 = 数据集标签，后续列 = X 轴 label），**后续每行 = 一个数据集**。
+
+### 内嵌 CSV（直接写在 markdown 里）
+
+````markdown
+```chart
 {
-  "title": "雷达图示例",
-  "labels": ["项目1", "项目2", "项目3", "项目4", "项目5"],
-  "max": 20,
-  "datasets": [
-    { "label": "程度1", "data": [20, 17, 13, 15, 14] },
-    { "label": "程度2", "data": [12, 11, 9, 10, 18] }
-  ]
+  "type": "bar",
+  "title": "年度文章分类分布（CSV）",
+  "csv": "类别,技术,音乐,游戏,生活\n2024,12,4,6,8\n2025,18,7,10,11\n2026,5,3,4,6"
+}
+```
+````
+
+渲染效果：
+
+```chart
+{
+  "type": "bar",
+  "title": "年度文章分类分布（CSV）",
+  "csv": "类别,技术,音乐,游戏,生活\n2024,12,4,6,8\n2025,18,7,10,11\n2026,5,3,4,6"
 }
 ```
 
+### 远程 CSV（fetch 加载）
 
----
+````markdown
+```chart
+{
+  "type": "line",
+  "title": "长期趋势（远程 CSV）",
+  "dataUrl": "/data/stats.csv"
+}
+```
+````
 
+渲染效果：
+
+```chart
+{
+  "type": "line",
+  "title": "长期趋势（远程 CSV）",
+  "dataUrl": "/data/stats.csv"
+}
+```
+
+> `dataUrl` 支持绝对路径 `/xxx.csv` 或完整 URL；加载失败会静默跳过，不会让图表崩。
+
+## 明暗主题切换
+
+点击顶部导航栏右侧的 **☾ / ☀** 圆形按钮可一键切换亮色/深色主题，偏好会存进浏览器 localStorage，下次访问自动恢复。深色下：
+- 所有 CSS 变量整体切到低亮度暖色
+- Chart.js 图表文字/网格色同步更新
+- Admonition 提示块颜色微调避免过亮刺眼
